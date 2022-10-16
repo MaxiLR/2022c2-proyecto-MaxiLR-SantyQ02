@@ -7,12 +7,12 @@ using namespace std;
 template<class T>
 class Node{
 private:
-  T data;
+  T* data;
   Node<T> *next;
 
 public:
-  Node(T data=0){
-    this->data = data;
+  Node(T data){
+    this->data = new T(data);
   }
   ~Node(){
     delete next;
@@ -20,7 +20,7 @@ public:
   void setData(T data){
     this->data = data;
   }
-  T getData(){
+  T* getData(){
     return data;
   }
   void setNext(Node<T>* next){

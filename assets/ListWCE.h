@@ -217,7 +217,7 @@ template <class T> T *List<T>::searchWord(string Key) {
   if (auxNode == nullptr)
     return nullptr;
 
-  return auxNode;
+  return auxNode->getData();
 }
 
 /**
