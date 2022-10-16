@@ -29,12 +29,6 @@ public:
   Node<T>* getNext(){
     return next;
   }
-  void setPrioridad(int prioridad){
-    this->prioridad = prioridad;
-  }
-  int getPrioridad(){
-    return prioridad;
-  }
 };
 
 #endif
