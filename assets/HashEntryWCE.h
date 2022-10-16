@@ -7,18 +7,18 @@ using namespace std;
 
 class HashEntry {
 private:
-  string key;
-  unsigned int counter;
+  string Key;
+  unsigned int Counter;
 
 public:
-  HashEntry(string key) {
-    this->key = key;
-    this->counter = 1;
+  HashEntry(string Key) {
+    this->Key = Key;
+    this->Counter = 1;
   }
-  string getKey() { return key; }
-  void setKey(string key) { this->key = key; }
-  unsigned int getCounter() { return counter; }
-  void setCounter(unsigned int counter) { this->counter = counter; }
+  string getKey() { return Key; }
+  void setKey(string Key) { this->Key = Key; }
+  unsigned int getCounter() { return Counter; }
+  void setCounter(unsigned int Counter) { this->Counter = Counter; }
 };
 
 #endif // U05_HASH_HASHMAP_HASHENTRY_H_

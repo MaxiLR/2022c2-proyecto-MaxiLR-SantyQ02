@@ -2,106 +2,98 @@
 #define U05_HASH_HASHMAP_HASHMAP_H_
 
 #include "HashEntryWCE.h"
+#include "ListWCE.h"
 
 class HashMap {
 private:
-  HashEntry **table;
+  List<HashEntry> **Table;
   unsigned int HECounter;
-  unsigned int size;
-  unsigned int (*hashFuncP)(string key);
-  string toUpper(string str);
+  unsigned int Size;
+  unsigned int (*hashFuncP)(string Key);
+  string toUpper(string Str);
 
 public:
-  unsigned int CollitionCounter;
-  HashMap(unsigned int size, unsigned int (*hashFuncP)(string));
+  unsigned int CollitionCounter; // Debugging
+  HashMap(unsigned int Size, unsigned int (*hashFuncP)(string));
   unsigned int getHECounter();
-  unsigned int getCounter(string key);
-  string getKey(string key);
-  void put(string key);
-  void remove(string key);
+  unsigned int getCounter(string Key);
+  string getKey(string Key);
+  void put(string Key);
+  void remove(string Key);
   ~HashMap();
   bool esVacio();
 };
 
-HashMap::HashMap(unsigned int size, unsigned int (*fp)(string)) {
-  this->size = size;
+HashMap::HashMap(unsigned int Size, unsigned int (*fp)(string)) {
+  this->Size = Size;
   this->HECounter = 0;
-  this->CollitionCounter = 0;
-  table = new HashEntry *[size];
-  for (int i = 0; i < size; i++) {
-    table[i] = nullptr;
+  this->CollitionCounter = 0; // Debugging
+  Table = new List<HashEntry> *[Size];
+  for (int i = 0; i < Size; i++) {
+    Table[i] = nullptr;
   }
   hashFuncP = fp;
 }
 
 HashMap::~HashMap() {
-  for (int i = 0; i < size; i++) {
-    if (table[i] != nullptr) {
-      delete table[i];
+  for (int i = 0; i < Size; i++) {
+    if (Table[i] != nullptr) {
+      delete Table[i];
     }
   }
 }
 
 unsigned int HashMap::getHECounter() { return HECounter; }
 
-unsigned int HashMap::getCounter(string key) {
-  unsigned int pos = hashFuncP(key) % size;
+unsigned int HashMap::getCounter(string Key) {
+  unsigned int pos = hashFuncP(Key) % Size;
+  HashEntry *TablePos = Table[pos]->searchWord(Key);
 
-  if (table[pos] == nullptr)
+  if (TablePos == nullptr)
     throw 404;
 
-  if (table[pos]->getKey() == toUpper(key)) {
-    return table[pos]->getCounter();
-  }
-
-  throw 409;
+  return TablePos->getCounter();
 }
 
-string HashMap::getKey(string key){
-  unsigned int pos = hashFuncP(key) % size;
+string HashMap::getKey(string Key) {
+  unsigned int pos = hashFuncP(Key) % Size;
+  HashEntry *TablePos = Table[pos]->searchWord(Key);
 
-  if (table[pos] == nullptr)
+  if (TablePos == nullptr)
     throw 404;
 
-  if (table[pos]->getKey() == toUpper(key)) {
-    return table[pos]->getKey();
-  }
-
-  throw 409;
+  return TablePos->getKey();
 }
 
-void HashMap::put(string key) {
+void HashMap::put(string Key) {
 
-  unsigned int pos = hashFuncP(key) % size;
+  unsigned int pos = hashFuncP(Key) % Size;
+  HashEntry *TablePos = Table[pos]->searchWord(Key);
 
-  if (table[pos] != nullptr && table[pos]->getKey() == toUpper(key)) {
-    table[pos]->setCounter(table[pos]->getCounter() + 1);
-    return;
-  }
-  if (table[pos] != nullptr && table[pos]->getKey() != toUpper(key)) {
-    CollitionCounter++;
+  if (TablePos != nullptr) {
+    TablePos->setCounter(TablePos->getCounter() + 1);
     return;
   }
 
-  table[pos] = new HashEntry(toUpper(key));
-  HECounter++;
+  HashEntry newHE(Key);
+  Table[pos]->insertLast(newHE);
 }
 
-void HashMap::remove(string key) {}
+void HashMap::remove(string Key) {}
 
 bool HashMap::esVacio() {
-  for (int i = 0; i < size; i++) {
-    if (table[i] != nullptr)
+  for (int i = 0; i < Size; i++) {
+    if (Table[i] != nullptr)
       return false;
   }
   return true;
 }
 
-string HashMap::toUpper(string str) {
-  for (int i = 0; i < str.length(); i++) {
-    str[i] = toupper(str[i]);
+string HashMap::toUpper(string Str) {
+  for (int i = 0; i < Str.length(); i++) {
+    Str[i] = toupper(Str[i]);
   }
-  return str;
+  return Str;
 }
 
 #endif // U05_HASH_HASHMAP_HASHMAP_H_
