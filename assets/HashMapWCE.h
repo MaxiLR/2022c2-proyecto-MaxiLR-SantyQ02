@@ -11,9 +11,11 @@ private:
   unsigned int Size;
   unsigned int (*hashFuncP)(string Key);
   string toUpper(string Str);
+  unsigned int NotEmptyCellCounter; // Debugging
 
 public:
-  unsigned int CollitionCounter; // Debugging
+  unsigned int getEmptyCells();
+  unsigned int getCollitionCounter();
   HashMap(unsigned int Size, unsigned int (*hashFuncP)(string));
   unsigned int getHECounter();
   unsigned int getCounter(string Key);
@@ -27,7 +29,7 @@ public:
 HashMap::HashMap(unsigned int Size, unsigned int (*fp)(string)) {
   this->Size = Size;
   this->HECounter = 0;
-  this->CollitionCounter = 0; // Debugging
+  this->NotEmptyCellCounter = 0; // Debugging
   Table = new List<HashEntry> *[Size];
   for (int i = 0; i < Size; i++) {
     Table[i] = new List<HashEntry>;
@@ -41,6 +43,25 @@ HashMap::~HashMap() {
       delete Table[i];
     }
   }
+}
+
+unsigned int HashMap::getEmptyCells() {
+  unsigned int y = 0;
+  for (int i = 0; i < Size; i++) {
+    if (Table[i]->isEmpty()) {
+      y++;
+    }
+  }
+  return y;
+}
+
+unsigned int HashMap::getCollitionCounter() {
+  for (int i = 0; i < Size; i++) {
+    if (!Table[i]->isEmpty()) {
+      NotEmptyCellCounter++;
+    }
+  }
+  return HECounter - NotEmptyCellCounter;
 }
 
 unsigned int HashMap::getHECounter() { return HECounter; }
@@ -77,6 +98,7 @@ void HashMap::put(string Key) {
 
   HashEntry newHE(toUpper(Key));
   Table[pos]->insertLast(newHE);
+  HECounter++;
 }
 
 void HashMap::remove(string Key) {}

@@ -1,4 +1,5 @@
 #include "assets/HashMapWCE.h"
+#include <ctime>
 #include <fstream>
 #include <iostream>
 #include <math.h>
@@ -33,22 +34,33 @@ unsigned int hashFunction(string key) {
 // }
 
 int main() {
-  HashMap HMTest(478293, hashFunction);
 
-  string word;
-  ifstream file("txt.txt");
-  while(!file.eof()){
-    file >> word;
-    HMTest.put(word);
-  }
-  file.close();
+  clock_t begin;
+  begin = clock();
+
+  HashMap HMTest(65535, hashFunction);
 
   try {
-    HMTest.put("de");
-    cout << HMTest.getCounter("de");
+    string word;
+    ifstream file("mucho_texto.txt");
+    while (!file.eof()) {
+      file >> word;
+      HMTest.put(word);
+    }
+    file.close();
+    cout << HMTest.getCounter("la") << endl
+         << "Cantidad de Palabras Distintas: " << HMTest.getHECounter() << endl
+         << "Cantidad de Colisiones: " << HMTest.getCollitionCounter() << endl;
+    cout << "Cantidad de Celdas Vacias: " << HMTest.getEmptyCells();
   } catch (int err) {
     cerr << "Error " << err << "!" << endl;
   }
+
+  clock_t end = clock();
+
+  double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
+
+  cout << endl << "Tiempo: " << elapsed_secs << "\n" << endl;
 
   return 0;
 }
