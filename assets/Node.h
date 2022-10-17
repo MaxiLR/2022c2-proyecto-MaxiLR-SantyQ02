@@ -18,7 +18,7 @@ public:
     delete next;
   }
   void setData(T data){
-    this->data = data;
+    *this->data = data;
   }
   T* getData(){
     return data;

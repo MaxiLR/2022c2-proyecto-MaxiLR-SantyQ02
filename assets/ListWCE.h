@@ -5,8 +5,8 @@
 
 /**
  * Clase que implementa una List Enlazada generica, ya que puede
- * almacenar cualquier tipo de dato T
- * @tparam T cualquier tipo de dato
+ * almacenar cualquier tipo de data T
+ * @tparam T cualquier tipo de data
  */
 template <class T> class List {
 private:
@@ -23,13 +23,13 @@ public:
   bool isEmpty();
   int getSize();
   void setSize(int);
-  void insert(int pos, T dato);
-  void insertFirst(T dato);
-  void insertLast(T dato);
+  void insert(int pos, T data);
+  void insertFirst(T data);
+  void insertLast(T data);
   void remove(int pos);
-  T getData(int pos);
-  T *searchWord(string Key);
-  void replace(int pos, T dato);
+  T* getData(int pos);
+  T* searchWord(string Key);
+  void replace(int pos, T data);
   void empty();
 };
 
@@ -81,15 +81,15 @@ template <class T> int List<T>::getSize() { return Size; }
 template <class T> void List<T>::setSize(int Size) { this->Size = Size; }
 
 /**
- * Inserta un nodo con el dato en la posicion pos
+ * Inserta un nodo con el data en la posicion pos
  * @tparam T
- * @param pos lugar donde será insertado el dato
- * @param dato  dato a insert
+ * @param pos lugar donde será insertado el data
+ * @param data  data a insert
  */
-template <class T> void List<T>::insert(int pos, T dato) {
+template <class T> void List<T>::insert(int pos, T data) {
   int posActual = 0;
   Node<T> *auxNode = beginning, *newNode;
-  newNode = new Node<T>(dato);
+  newNode = new Node<T>(data);
 
   if (pos == 0) {
     newNode->setNext(beginning);
@@ -111,29 +111,29 @@ template <class T> void List<T>::insert(int pos, T dato) {
   Size++;
 }
 /**
- * Inserta un nodo con el dato en la primera posicion
+ * Inserta un nodo con el data en la primera posicion
  * @tparam T
- * @param dato dato a insert
+ * @param data data a insert
  */
-template <class T> void List<T>::insertFirst(T dato) {
+template <class T> void List<T>::insertFirst(T data) {
   Node<T> *newNode;
-  newNode = new Node<T>(dato);
+  newNode = new Node<T>(data);
 
   newNode->setNext(beginning);
   beginning = newNode;
   Size++;
 }
 /**
- * Inserta un nodo con el dato en la ultima posicion
+ * Inserta un nodo con el data en la ultima posicion
  * @tparam T
- * @param dato dato a insert
+ * @param data data a insert
  */
-template <class T> void List<T>::insertLast(T dato) {
+template <class T> void List<T>::insertLast(T data) {
   Node<T> *auxNode = beginning, *newNode;
-  newNode = new Node<T>(dato);
+  newNode = new Node<T>(data);
 
   if (isEmpty()) {
-    insertFirst(dato);
+    insertFirst(data);
     return;
   }
 
@@ -181,12 +181,12 @@ template <class T> void List<T>::remove(int pos) {
   Size--;
 }
 /**
- * Obtener el dato del nodo en la posicion pos
+ * Obtener el data del nodo en la posicion pos
  * @tparam T
- * @param pos posicion del dato
- * @return dato almacenado en el nodo
+ * @param pos posicion del data
+ * @return data almacenado en el nodo
  */
-template <class T> T List<T>::getData(int pos) {
+template <class T> T* List<T>::getData(int pos) {
   Node<T> *auxNode = beginning;
   int posActual = 0;
 
@@ -205,7 +205,8 @@ template <class T> T List<T>::getData(int pos) {
 }
 
 template <class T> T *List<T>::searchWord(string Key) {
-  Node<T> *auxNode = beginning;
+  Node<T> *auxNode;
+  auxNode = beginning;
 
   if (isEmpty())
     return nullptr;
@@ -221,12 +222,12 @@ template <class T> T *List<T>::searchWord(string Key) {
 }
 
 /**
- * Reemplaza el dato almacenado en un nodo por este otro
+ * Reemplaza el data almacenado en un nodo por este otro
  * @tparam T
  * @param pos posicion donde se desea replace
- * @param dato newNode dato a almacenar
+ * @param data newNode data a almacenar
  */
-template <class T> void List<T>::replace(int pos, T dato) {
+template <class T> void List<T>::replace(int pos, T data) {
   int posActual = 0;
   Node<T> *auxNode = beginning;
 
@@ -241,7 +242,7 @@ template <class T> void List<T>::replace(int pos, T dato) {
   if (auxNode == nullptr)
     throw 408;
 
-  auxNode->setDato(dato);
+  auxNode->setDato(data);
 }
 /**
  * Función que vacia la lista enlazada

@@ -30,7 +30,7 @@ HashMap::HashMap(unsigned int Size, unsigned int (*fp)(string)) {
   this->CollitionCounter = 0; // Debugging
   Table = new List<HashEntry> *[Size];
   for (int i = 0; i < Size; i++) {
-    Table[i] = nullptr;
+    Table[i] = new List<HashEntry>;
   }
   hashFuncP = fp;
 }
@@ -75,7 +75,7 @@ void HashMap::put(string Key) {
     return;
   }
 
-  HashEntry newHE(Key);
+  HashEntry newHE(toUpper(Key));
   Table[pos]->insertLast(newHE);
 }
 
