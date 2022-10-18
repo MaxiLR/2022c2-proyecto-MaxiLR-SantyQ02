@@ -3,6 +3,8 @@
 
 #include "HashEntryWCE.h"
 #include "ListWCE.h"
+#include <math.h>
+#include <string>
 
 class HashMap {
 private:
@@ -14,7 +16,7 @@ private:
   string toUpper(string Str);
 
 public:
-  explicit HashMap(unsigned int Size);
+  HashMap();
   unsigned int getEmptyCells();
   unsigned int getCollitionCounter(); // Debugging
   unsigned int getHECounter();
@@ -26,8 +28,8 @@ public:
   bool esVacio();
 };
 
-HashMap::HashMap(unsigned int Size) {
-  this->Size = Size;
+HashMap::HashMap() {
+  this->Size = 252525;
   this->HECounter = 0;
   this->NotEmptyCellCounter = 0; // Debugging
   Table = new List<HashEntry> *[Size];
@@ -86,17 +88,9 @@ string HashMap::getKey(string Key) {
 }
 
 void HashMap::put(string Key) {
-
   unsigned int pos = hashFunc(Key) % Size;
-  HashEntry *TablePos = Table[pos]->searchWord(Key);
-
-  if (TablePos != nullptr) {
-    TablePos->setCounter(TablePos->getCounter() + 1);
-    return;
-  }
-
   HashEntry newHE(toUpper(Key));
-  Table[pos]->insertLast(newHE);
+  Table[pos]->autoinsert(newHE);
   HECounter++;
 }
 
@@ -117,12 +111,12 @@ string HashMap::toUpper(string Str) {
   return Str;
 }
 
-unsigned int HashMap::hashFunc(string Key){
-  unsigned int hash = 0;
-  for (int i = 0; i < Key.length(); i++) {
-    hash = 31 * hash + toupper(Key[i]);
+unsigned int HashMap::hashFunc(string Key) {
+  string hash;
+  for (int i = 0; i < 3; i++) {
+    hash += to_string(toupper(Key[i]));
   }
-  return hash;
+  return stoi(hash) - 656565;
 }
 
 #endif // U05_HASH_HASHMAP_HASHMAP_H_

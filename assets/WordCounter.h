@@ -40,7 +40,7 @@ unsigned int WordCounter::getDiffWordCount() { return DiffWordCount; }
 
 void WordCounter::defaultUse(string Filename) {
   ifstream file(Filename);
-  HashMap HM(125000);
+  HashMap HM;
   string word;
   while (!file.eof()) {
     file >> word;

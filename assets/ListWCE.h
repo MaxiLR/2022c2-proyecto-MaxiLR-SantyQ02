@@ -24,6 +24,7 @@ public:
   int getSize();
   void setSize(int);
   void insert(int pos, T data);
+  void autoinsert(T data);
   void insertFirst(T data);
   void insertLast(T data);
   void remove(int pos);
@@ -80,6 +81,38 @@ template <class T> int List<T>::getSize() { return Size; }
 
 template <class T> void List<T>::setSize(int Size) { this->Size = Size; }
 
+template <class T> void List<T>::autoinsert(T data){
+  Node<T> *auxNode = beginning, *newNode;
+  newNode = new Node<T>(data);
+
+  if (isEmpty()) {
+    newNode->setNext(beginning);
+    beginning = newNode;
+    Size++;
+    return;
+  }
+
+  while (auxNode->getNext() != nullptr && data.getKey().compare(auxNode->getNext()->getData()->getKey()) > 0) {
+    auxNode = auxNode->getNext();
+  }
+
+  if (auxNode->getNext() == nullptr) {
+    newNode->setNext(nullptr);
+    auxNode->setNext(newNode);
+    Size++;
+    return;
+  }
+
+  if (data.getKey().compare(auxNode->getData()->getKey()) == 0){
+    auxNode->getData()->setCounter(auxNode->getData()->getCounter() + 1);
+    return;
+  }
+
+  newNode->setNext(auxNode->getNext());
+  auxNode->setNext(newNode);
+  Size++;
+}
+
 /**
  * Inserta un nodo con el data en la posicion pos
  * @tparam T
@@ -94,6 +127,7 @@ template <class T> void List<T>::insert(int pos, T data) {
   if (pos == 0) {
     newNode->setNext(beginning);
     beginning = newNode;
+    Size++;
     return;
   }
 

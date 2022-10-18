@@ -2,7 +2,6 @@
 #include <ctime>
 #include <fstream>
 #include <iostream>
-#include <math.h>
 
 #define TEXT_1 "txt.txt"
 #define TEXT_2 "Words.txt"
@@ -12,48 +11,47 @@ using namespace std;
 
 int main() {
 
-  clock_t begin;
-  begin = clock();
-
-  WordCounter WC;
-
-  WC.defaultUse(TEXT_3);
-
-  unsigned int WORDS = WC.getWordCount(), LETTERS = WC.getLetterCount(),
-               LINES = WC.getLineCount(), DIFFWORDS = WC.getDiffWordCount();
-
-  clock_t end = clock();
-  double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
-
-  cout << "WORDS: " << WORDS << " | LETTERS: " << LETTERS
-       << " | LINES: " << LINES << " | DIFFWORDS: " << DIFFWORDS;
-  cout << endl << "Tiempo: " << elapsed_secs << "\n" << endl;
-
-  // string word;
-
-  // // Hash:
+  string word;
 
   // clock_t begin;
   // begin = clock();
 
-  // HashMap HMTest(500000);
+  // WordCounter WC;
 
-  // try {
-  //   ifstream file("mucho_texto.txt");
-  //   while (!file.eof()) {
-  //     file >> word;
-  //     HMTest.put(word);
-  //   }
-  //   file.close();
-  //   cout << HMTest.getCounter("ABRIR") << endl
-  //        << "Palabras Diferentes: " << HMTest.getHECounter() << endl;
-  // } catch (int err) {
-  //   cerr << "Error " << err << "!" << endl;
-  // }
+  // WC.defaultUse(TEXT_3);
+
+  // unsigned int WORDS = WC.getWordCount(), LETTERS = WC.getLetterCount(),
+  //              LINES = WC.getLineCount(), DIFFWORDS = WC.getDiffWordCount();
 
   // clock_t end = clock();
   // double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
-  // cout << "Tiempo del Hash: " << elapsed_secs << "\n" << endl;
+
+  // cout << "WORDS: " << WORDS << " | LETTERS: " << LETTERS
+  //      << " | LINES: " << LINES << " | DIFFWORDS: " << DIFFWORDS;
+  // cout << endl << "Tiempo: " << elapsed_secs << "\n" << endl;
+
+  // Hash:
+
+  clock_t begin;
+  begin = clock();
+
+  HashMap HMTest;
+
+  try {
+    ifstream file("mucho_texto.txt");
+    while (!file.eof()) {
+      file >> word;
+      HMTest.put(word);
+    }
+    file.close();
+    cout << "Palabras Diferentes: " << HMTest.getHECounter() << endl;
+  } catch (int err) {
+    cerr << "Error " << err << "!" << endl;
+  }
+
+  clock_t end = clock();
+  double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
+  cout << "Tiempo del Hash: " << elapsed_secs << "\n" << endl;
 
   // // Arbol:
 
