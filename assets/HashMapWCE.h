@@ -16,7 +16,7 @@ private:
 public:
   explicit HashMap(unsigned int Size);
   unsigned int getEmptyCells();
-  unsigned int getCollitionCounter();
+  unsigned int getCollitionCounter(); // Debugging
   unsigned int getHECounter();
   unsigned int getCounter(string Key);
   string getKey(string Key);

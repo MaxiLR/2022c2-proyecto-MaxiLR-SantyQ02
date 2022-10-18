@@ -17,12 +17,16 @@ int main() {
 
   WordCounter WC;
 
-  WC.defaultUse(TEXT_1);
+  WC.defaultUse(TEXT_3);
 
-  cout << "WORDS: " << WC.getWordCount() << " | LETTERS: " << WC.getLetterCount() << " | LINES: " << WC.getLineCount() << " | DIFFWORDS: " << WC.getDiffWordCount();
+  unsigned int WORDS = WC.getWordCount(), LETTERS = WC.getLetterCount(),
+               LINES = WC.getLineCount(), DIFFWORDS = WC.getDiffWordCount();
 
   clock_t end = clock();
   double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
+
+  cout << "WORDS: " << WORDS << " | LETTERS: " << LETTERS
+       << " | LINES: " << LINES << " | DIFFWORDS: " << DIFFWORDS;
   cout << endl << "Tiempo: " << elapsed_secs << "\n" << endl;
 
   // string word;
