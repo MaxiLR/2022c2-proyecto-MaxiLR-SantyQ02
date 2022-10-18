@@ -1,3 +1,4 @@
+#include "assets/DictionaryTree.h"
 #include "assets/HashMapWCE.h"
 #include <ctime>
 #include <fstream>
@@ -6,61 +7,83 @@
 
 using namespace std;
 
-unsigned int hashFunction(string key) {
-  unsigned int crypt = 0;
-  for (int i = 0; i < key.length(); i++) {
-    crypt += tolower(key[i]) * pow(11, key.length() - i);
+string toUpper(string Str) {
+  for (int i = 0; i < Str.length(); i++) {
+    Str[i] = toupper(Str[i]);
   }
-  return crypt;
+  return Str;
 }
 
-// unsigned int hashFunctionTest(){
-//   int arr[377461], i = 0, collitions = 0;
-//   string word;
-//   ifstream file("Words.txt");
-//   while (!file.eof() && i < 377461) {
-//     file >> word;
-//     arr[i] = hashFunction(word);
-//     for (int j = 0; j < i; j++) {
-//       if (arr[j] == arr[i]) {
-//         collitions++;
-//         break;
-//       }
-//     }
-//     i++;
-//   }
-//   file.close();
-//   return collitions;
-// }
-
 int main() {
+
+  string word;
+
+  // Hash:
 
   clock_t begin;
   begin = clock();
 
-  HashMap HMTest(65535, hashFunction);
+  HashMap HMTest(500000);
 
   try {
-    string word;
     ifstream file("mucho_texto.txt");
     while (!file.eof()) {
       file >> word;
       HMTest.put(word);
     }
     file.close();
-    cout << HMTest.getCounter("la") << endl
-         << "Cantidad de Palabras Distintas: " << HMTest.getHECounter() << endl
-         << "Cantidad de Colisiones: " << HMTest.getCollitionCounter() << endl;
-    cout << "Cantidad de Celdas Vacias: " << HMTest.getEmptyCells();
+    cout << HMTest.getCounter("ABRIR") << endl
+         << "Palabras Diferentes: " << HMTest.getHECounter() << endl;
   } catch (int err) {
     cerr << "Error " << err << "!" << endl;
   }
 
   clock_t end = clock();
-
   double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
+  cout << "Tiempo del Hash: " << elapsed_secs << "\n" << endl;
 
-  cout << endl << "Tiempo: " << elapsed_secs << "\n" << endl;
+  // Arbol:
+
+  clock_t begin2;
+  begin2 = clock();
+
+  BinaryTree BT;
+
+  ifstream file2("mucho_texto.txt");
+  while (!file2.eof()) {
+    try {
+      file2 >> word;
+      BT.put(toUpper(word));
+    } catch (int err) {
+    }
+  }
+  file2.close();
+
+  cout << "Palabras diferentes: " << BT.getDiffCounter() << endl;
+
+  clock_t end2 = clock();
+  double elapsed_secs2 = static_cast<double>(end2 - begin2) / CLOCKS_PER_SEC;
+  cout << "Tiempo del Arbol: " << elapsed_secs2 << "\n" << endl;
+
+  // Arbol Dictionario:
+
+  clock_t begin3;
+  begin3 = clock();
+
+  DictionaryTree DT;
+
+  ifstream file3("mucho_texto.txt");
+  while (!file3.eof()) {
+    file3 >> word;
+    DT.put(word);
+  }
+  file3.close();
+
+  cout << "Palabras diferentes: " << DT.getDiffCounter() << endl;
+
+  clock_t end3 = clock();
+  double elapsed_secs3 = static_cast<double>(end3 - begin3) / CLOCKS_PER_SEC;
+  cout << "Tiempo del Arbol: " << elapsed_secs3 << "\n" << endl;
 
   return 0;
 }

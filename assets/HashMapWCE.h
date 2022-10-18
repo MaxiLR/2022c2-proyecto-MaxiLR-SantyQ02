@@ -9,14 +9,14 @@ private:
   List<HashEntry> **Table;
   unsigned int HECounter;
   unsigned int Size;
-  unsigned int (*hashFuncP)(string Key);
-  string toUpper(string Str);
   unsigned int NotEmptyCellCounter; // Debugging
+  unsigned int hashFunc(string Key);
+  string toUpper(string Str);
 
 public:
+  explicit HashMap(unsigned int Size);
   unsigned int getEmptyCells();
   unsigned int getCollitionCounter();
-  HashMap(unsigned int Size, unsigned int (*hashFuncP)(string));
   unsigned int getHECounter();
   unsigned int getCounter(string Key);
   string getKey(string Key);
@@ -26,7 +26,7 @@ public:
   bool esVacio();
 };
 
-HashMap::HashMap(unsigned int Size, unsigned int (*fp)(string)) {
+HashMap::HashMap(unsigned int Size) {
   this->Size = Size;
   this->HECounter = 0;
   this->NotEmptyCellCounter = 0; // Debugging
@@ -34,7 +34,6 @@ HashMap::HashMap(unsigned int Size, unsigned int (*fp)(string)) {
   for (int i = 0; i < Size; i++) {
     Table[i] = new List<HashEntry>;
   }
-  hashFuncP = fp;
 }
 
 HashMap::~HashMap() {
@@ -67,7 +66,7 @@ unsigned int HashMap::getCollitionCounter() {
 unsigned int HashMap::getHECounter() { return HECounter; }
 
 unsigned int HashMap::getCounter(string Key) {
-  unsigned int pos = hashFuncP(Key) % Size;
+  unsigned int pos = hashFunc(Key) % Size;
   HashEntry *TablePos = Table[pos]->searchWord(Key);
 
   if (TablePos == nullptr)
@@ -77,7 +76,7 @@ unsigned int HashMap::getCounter(string Key) {
 }
 
 string HashMap::getKey(string Key) {
-  unsigned int pos = hashFuncP(Key) % Size;
+  unsigned int pos = hashFunc(Key) % Size;
   HashEntry *TablePos = Table[pos]->searchWord(Key);
 
   if (TablePos == nullptr)
@@ -88,7 +87,7 @@ string HashMap::getKey(string Key) {
 
 void HashMap::put(string Key) {
 
-  unsigned int pos = hashFuncP(Key) % Size;
+  unsigned int pos = hashFunc(Key) % Size;
   HashEntry *TablePos = Table[pos]->searchWord(Key);
 
   if (TablePos != nullptr) {
@@ -116,6 +115,14 @@ string HashMap::toUpper(string Str) {
     Str[i] = toupper(Str[i]);
   }
   return Str;
+}
+
+unsigned int HashMap::hashFunc(string Key){
+  unsigned int hash = 0;
+  for (int i = 0; i < Key.length(); i++) {
+    hash = 31 * hash + toupper(Key[i]);
+  }
+  return hash;
 }
 
 #endif // U05_HASH_HASHMAP_HASHMAP_H_
