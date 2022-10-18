@@ -1,26 +1,26 @@
-#ifndef BINARYTREE_H
-#define BINARYTREE_H
+#ifndef BINARYTREEWC_H
+#define BINARYTREEWC_H
 
-#include "TreeNode.h"
+#include "TreeNodeWC.h"
 
-class BinaryTree {
+class BinaryTreeWC {
 private:
-  TreeNode<string> *root;
-  unsigned int search(string Word, TreeNode<string> *r);
-  void put(string Word, TreeNode<string> *r);
-  void preorder(TreeNode<string> *r);
-  void inorder(TreeNode<string> *r);
-  void postorder(TreeNode<string> *r);
+  TreeNodeWC<string> *root;
+  unsigned int search(string Word, TreeNodeWC<string> *r); 
+  void put(string Word, TreeNodeWC<string> *r);
+  void preorder(TreeNodeWC<string> *r);
+  void inorder(TreeNodeWC<string> *r);
+  void postorder(TreeNodeWC<string> *r);
   int diffCounter;
 
 public:
-  BinaryTree();
+  BinaryTreeWC();
   void put(string Word);
   unsigned int search(string Word);
   void preorder();
   void inorder();
   void postorder();
-  ~BinaryTree();
+  ~BinaryTreeWC();
   bool isEmpty();
   void print();
   unsigned int getDiffCounter();
@@ -31,7 +31,7 @@ public:
  * @tparam K Clave por la cual va a ordenar el árbol
  * @tparam string Valor guardado por el árbol
  */
-BinaryTree::BinaryTree() {
+BinaryTreeWC::BinaryTreeWC() {
   root = nullptr;
   diffCounter = 0;
 }
@@ -39,7 +39,7 @@ BinaryTree::BinaryTree() {
 /**
  * Destructor del Arbol
  */
-BinaryTree::~BinaryTree() {}
+BinaryTreeWC::~BinaryTreeWC() {}
 
 /**
  * Busca un Word en el árbol. Si no esta el Word en el árbol
@@ -47,9 +47,9 @@ BinaryTree::~BinaryTree() {}
  * @param clave Valor a buscar
  * @return el valor buscado
  */
-unsigned int BinaryTree::search(string Word) { return search(Word, root); }
+unsigned int BinaryTreeWC::search(string Word) { return search(Word, root); }
 
-unsigned int BinaryTree::search(string Word, TreeNode<string> *r) {
+unsigned int BinaryTreeWC::search(string Word, TreeNodeWC<string> *r) {
   if (isEmpty())
     return 0;
   if (r == nullptr)
@@ -67,10 +67,10 @@ unsigned int BinaryTree::search(string Word, TreeNode<string> *r) {
  * @param clave Clave para agregar el Word
  * @param Word Dato a agregar
  */
-void BinaryTree::put(string Word) { put(Word, root); }
+void BinaryTreeWC::put(string Word) { put(Word, root); }
 
-void BinaryTree::put(string Word, TreeNode<string> *r) {
-  TreeNode<string> *newTreeNode = new TreeNode<string>(Word);
+void BinaryTreeWC::put(string Word, TreeNodeWC<string> *r) {
+  TreeNodeWC<string> *newTreeNode = new TreeNodeWC<string>(Word);
   if (isEmpty()) {
     root = newTreeNode;
     diffCounter++;
@@ -80,7 +80,7 @@ void BinaryTree::put(string Word, TreeNode<string> *r) {
   if (Word.compare(r->getData()) == 0) {
     r->setWordCount(
         r->getWordCount() +
-        1); // Aumentar ocurrencias, agregar atributo a clase TreeNode
+        1); // Aumentar ocurrencias, agregar atributo a clase TreeNodeWC
     return;
   }
   if (Word.compare(r->getData()) < 0) {
@@ -104,10 +104,10 @@ void BinaryTree::put(string Word, TreeNode<string> *r) {
  * Informa si un árbol esta vacío
  * @return
  */
-bool BinaryTree::isEmpty() { return root == nullptr; }
+bool BinaryTreeWC::isEmpty() { return root == nullptr; }
 
-void BinaryTree::preorder() { preorder(root); }
-void BinaryTree::preorder(TreeNode<string> *r) {
+void BinaryTreeWC::preorder() { preorder(root); }
+void BinaryTreeWC::preorder(TreeNodeWC<string> *r) {
   if (r == nullptr)
     return;
   cout << r->getData() << " ";
@@ -118,8 +118,8 @@ void BinaryTree::preorder(TreeNode<string> *r) {
 /**
  * Recorre un árbol en orden
  */
-void BinaryTree::inorder() { inorder(root); }
-void BinaryTree::inorder(TreeNode<string> *r) {
+void BinaryTreeWC::inorder() { inorder(root); }
+void BinaryTreeWC::inorder(TreeNodeWC<string> *r) {
   if (r == nullptr)
     return;
   inorder(r->getLeft());
@@ -130,8 +130,8 @@ void BinaryTree::inorder(TreeNode<string> *r) {
 /**
  * Recorre un árbol en postorden
  */
-void BinaryTree::postorder() { postorder(root); }
-void BinaryTree::postorder(TreeNode<string> *r) {
+void BinaryTreeWC::postorder() { postorder(root); }
+void BinaryTreeWC::postorder(TreeNodeWC<string> *r) {
   if (r == nullptr)
     return;
   postorder(r->getLeft());
@@ -139,12 +139,12 @@ void BinaryTree::postorder(TreeNode<string> *r) {
   cout << r->getData() << " ";
 }
 
-unsigned int BinaryTree::getDiffCounter() { return diffCounter; }
+unsigned int BinaryTreeWC::getDiffCounter() { return diffCounter; }
 
 /**
  * Muestra un árbol por consola
  */
-void BinaryTree::print() {
+void BinaryTreeWC::print() {
   if (root != nullptr)
     root->print(false, "");
   else

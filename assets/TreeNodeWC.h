@@ -1,23 +1,23 @@
-#ifndef TREENODE_H
-#define TREENODE_H
+#ifndef TREENODEWC_H
+#define TREENODEWC_H
 
 #include <iostream>
 
 using namespace std;
 
-template <class T> class TreeNode {
+template <class T> class TreeNodeWC {
 private:
   T Word;
   unsigned int WordCount;
-  TreeNode *left, *right;
+  TreeNodeWC *left, *right;
 
 public:
-  TreeNode() {
+  TreeNodeWC() {
     this->WordCount = 1;
     left = nullptr;
     right = nullptr;
   }
-  TreeNode(T Word) {
+  TreeNodeWC(T Word) {
     this->Word = Word;
     this->WordCount = 1;
     left = nullptr;
@@ -27,10 +27,10 @@ public:
   void setDato(T d) { Word = d; }
   unsigned int getWordCount() { return WordCount; }
   void setWordCount(unsigned int WordCount) { this->WordCount = WordCount; }
-  TreeNode *getRight() const { return right; }
-  void setRight(TreeNode *r) { right = r; }
-  TreeNode *getLeft() const { return left; }
-  void setLeft(TreeNode *l) { left = l; }
+  TreeNodeWC *getRight() const { return right; }
+  void setRight(TreeNodeWC *r) { right = r; }
+  TreeNodeWC *getLeft() const { return left; }
+  void setLeft(TreeNodeWC *l) { left = l; }
   void print(bool esDerecho, string identacion) {
     if (right != nullptr) {
       right->print(true, identacion + (esDerecho ? "     " : "|    "));

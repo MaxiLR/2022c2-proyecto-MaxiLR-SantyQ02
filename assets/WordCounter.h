@@ -2,10 +2,9 @@
 #define WORDCOUNTER_H
 
 #include "DictionaryTree.h"
-#include "HashMapWCE.h"
+#include "HashMapWC.h"
 #include <algorithm>
 #include <fstream>
-#include <iostream>
 
 using namespace std;
 
@@ -40,7 +39,7 @@ unsigned int WordCounter::getDiffWordCount() { return DiffWordCount; }
 
 void WordCounter::defaultUse(string Filename) {
   ifstream file(Filename);
-  HashMap HM;
+  HashMapWC HM(499979);
   string word;
   while (!file.eof()) {
     file >> word;
@@ -49,7 +48,7 @@ void WordCounter::defaultUse(string Filename) {
     HM.put(word);
     if (file.peek() == '\n' || file.eof())
       LineCount++;
-    DiffWordCount = HM.getHECounter();
+    DiffWordCount = HM.getHECount();
   }
   file.close();
 }

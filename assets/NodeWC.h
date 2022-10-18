@@ -1,20 +1,20 @@
-#ifndef NODE_H
-#define NODE_H
+#ifndef NODEWC_H
+#define NODEWC_H
 
 #include <iostream>
 using namespace std;
 
 template<class T>
-class Node{
+class NodeWC{
 private:
   T* data;
-  Node<T> *next;
+  NodeWC<T> *next;
 
 public:
-  Node(T data){
+  NodeWC(T data){
     this->data = new T(data);
   }
-  ~Node(){
+  ~NodeWC(){
     delete next;
   }
   void setData(T data){
@@ -23,10 +23,10 @@ public:
   T* getData(){
     return data;
   }
-  void setNext(Node<T>* next){
+  void setNext(NodeWC<T>* next){
     this->next = next;
   }
-  Node<T>* getNext(){
+  NodeWC<T>* getNext(){
     return next;
   }
 };

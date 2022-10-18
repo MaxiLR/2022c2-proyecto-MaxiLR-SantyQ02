@@ -1,17 +1,17 @@
-#ifndef U05_HASH_HASHMAP_HASHENTRY_H_
-#define U05_HASH_HASHMAP_HASHENTRY_H_
+#ifndef HASHENTRYWC_H
+#define HASHENTRYWC_H
 
 #include <iostream>
 
 using namespace std;
 
-class HashEntry {
+class HashEntryWC {
 private:
   string Key;
   unsigned int Counter;
 
 public:
-  HashEntry(string Key) {
+  HashEntryWC(string Key) {
     this->Key = Key;
     this->Counter = 1;
   }
@@ -21,4 +21,4 @@ public:
   void setCounter(unsigned int Counter) { this->Counter = Counter; }
 };
 
-#endif // U05_HASH_HASHMAP_HASHENTRY_H_
+#endif // HASHENTRYWC_H

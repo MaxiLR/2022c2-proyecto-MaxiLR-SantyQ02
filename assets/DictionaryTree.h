@@ -1,11 +1,11 @@
 #ifndef DICTIONARYTREE_H
 #define DICTIONARYTREE_H
 
-#include "BinaryTreeWCE.h"
+#include "BinaryTreeWC.h"
 
 class DictionaryTree {
 private:
-  BinaryTree *AG, *HN, *OU, *VZ;
+  BinaryTreeWC *AG, *HN, *OU, *VZ;
   unsigned int diffCounter;
   string toUpper(string Word);
 
@@ -18,12 +18,13 @@ public:
 };
 
 DictionaryTree::DictionaryTree() {
-  AG = new BinaryTree;
-  HN = new BinaryTree;
-  OU = new BinaryTree;
-  VZ = new BinaryTree;
+  AG = new BinaryTreeWC;
+  HN = new BinaryTreeWC;
+  OU = new BinaryTreeWC;
+  VZ = new BinaryTreeWC;
   diffCounter = 0;
 }
+
 void DictionaryTree::put(string Word) {
   Word = toUpper(Word);
   if (int(Word[0]) < 79) {
@@ -53,12 +54,14 @@ unsigned int DictionaryTree::search(string Word) {
       return VZ->search(Word);
   }
 }
+
 void DictionaryTree::inorder() {
   AG->inorder();
   HN->inorder();
   OU->inorder();
   VZ->inorder();
 }
+
 unsigned int DictionaryTree::getDiffCounter() {
   return AG->getDiffCounter() + HN->getDiffCounter() + OU->getDiffCounter() +
          VZ->getDiffCounter();

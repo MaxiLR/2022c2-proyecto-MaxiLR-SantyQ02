@@ -1,100 +1,35 @@
 #include "assets/WordCounter.h"
 #include <ctime>
-#include <fstream>
 #include <iostream>
 
-#define TEXT_1 "txt.txt"
-#define TEXT_2 "Words.txt"
-#define TEXT_3 "mucho_texto.txt"
+#define TEXT_1 "testTexts/txt.txt"
+#define TEXT_2 "testTexts/Words.txt"
+#define TEXT_3 "testTexts/mucho_texto.txt"
 
 using namespace std;
 
+//-palabras [n]: Mostrará las n primeras palabras en orden alfabético. Si n no es ingresado o vale 0, mostrará todas las palabras 
+// [DictionaryTree]
+//-ocurrencias [n]: Mostrará las n palabras y la cantidad de ocurrencias de c/u ordenadas de mayor a menor por ocurrencia. Si n no es ingresado o vale 0, mostrará todas las palabras
+// [HashMapWC + OcurrenciesQueue]
+//-mostrar [palabra],[palabra] : Mostrará la o las palabras pasadas como argumento ordenadas por ocurrencia. 
+// [HashMapWC + OcurrenciesQueue]
+//-excluir [palabra],[palabra] : Modifica los comandos ocurrencias y palabras haciendo que no muestren las palabras pasadas como argumentos.
+// [Delete according to structure]
+//-excluirf [archivo.txt] : Modifica los comandos ocurrencias y palabras haciendo que no muestren las palabras que contiene el archivo.txt.
+// [Delete according to structure]
+
+
+string toUpper(string Str) {
+    for (int i = 0; i < Str.length(); i++) {
+        Str[i] = toupper(Str[i]);
+    }
+    return Str;
+}
+
 int main() {
 
-  string word;
-
-  // clock_t begin;
-  // begin = clock();
-
-  // WordCounter WC;
-
-  // WC.defaultUse(TEXT_3);
-
-  // unsigned int WORDS = WC.getWordCount(), LETTERS = WC.getLetterCount(),
-  //              LINES = WC.getLineCount(), DIFFWORDS = WC.getDiffWordCount();
-
-  // clock_t end = clock();
-  // double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
-
-  // cout << "WORDS: " << WORDS << " | LETTERS: " << LETTERS
-  //      << " | LINES: " << LINES << " | DIFFWORDS: " << DIFFWORDS;
-  // cout << endl << "Tiempo: " << elapsed_secs << "\n" << endl;
-
-  // Hash:
-
-  clock_t begin;
-  begin = clock();
-
-  HashMap HMTest;
-
-  try {
-    ifstream file("mucho_texto.txt");
-    while (!file.eof()) {
-      file >> word;
-      HMTest.put(word);
-    }
-    file.close();
-    cout << "Palabras Diferentes: " << HMTest.getHECounter() << endl;
-  } catch (int err) {
-    cerr << "Error " << err << "!" << endl;
-  }
-
-  clock_t end = clock();
-  double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
-  cout << "Tiempo del Hash: " << elapsed_secs << "\n" << endl;
-
-  // // Arbol:
-
-  // clock_t begin2;
-  // begin2 = clock();
-
-  // BinaryTree BT;
-
-  // ifstream file2("mucho_texto.txt");
-  // while (!file2.eof()) {
-  //   try {
-  //     file2 >> word;
-  //     BT.put(toUpper(word));
-  //   } catch (int err) {
-  //   }
-  // }
-  // file2.close();
-
-  // cout << "Palabras diferentes: " << BT.getDiffCounter() << endl;
-
-  // clock_t end2 = clock();
-  // double elapsed_secs2 = static_cast<double>(end2 - begin2) / CLOCKS_PER_SEC;
-  // cout << "Tiempo del Arbol: " << elapsed_secs2 << "\n" << endl;
-
-  // // Arbol Dictionario:
-
-  // clock_t begin3;
-  // begin3 = clock();
-
-  // DictionaryTree DT;
-
-  // ifstream file3("mucho_texto.txt");
-  // while (!file3.eof()) {
-  //   file3 >> word;
-  //   DT.put(word);
-  // }
-  // file3.close();
-
-  // cout << "Palabras diferentes: " << DT.getDiffCounter() << endl;
-
-  // clock_t end3 = clock();
-  // double elapsed_secs3 = static_cast<double>(end3 - begin3) / CLOCKS_PER_SEC;
-  // cout << "Tiempo del Arbol: " << elapsed_secs3 << "\n" << endl;
+  ifstream file(TEXT_1, );
 
   return 0;
 }

@@ -1,25 +1,25 @@
-#ifndef LIST_H
-#define LIST_H
+#ifndef LISTWC_H
+#define LISTWC_H
 
-#include "Node.h"
+#include "NodeWC.h"
 
 /**
- * Clase que implementa una List Enlazada generica, ya que puede
+ * Clase que implementa una ListWC Enlazada generica, ya que puede
  * almacenar cualquier tipo de data T
  * @tparam T cualquier tipo de data
  */
-template <class T> class List {
+template <class T> class ListWC {
 private:
-  Node<T> *beginning;
+  NodeWC<T> *beginning;
   int Size;
   string toUpper(string Str);
 
 public:
-  List();
-  List(const List<T> &li);
-  ~List() { delete beginning; }
-  Node<T> *getBeginning();
-  void setBeginning(Node<T> *);
+  ListWC();
+  ListWC(const ListWC<T> &li);
+  ~ListWC() { delete beginning; }
+  NodeWC<T> *getBeginning();
+  void setBeginning(NodeWC<T> *);
   bool isEmpty();
   int getSize();
   void setSize(int);
@@ -35,26 +35,26 @@ public:
 };
 
 /**
- * Constructor de la clase List
+ * Constructor de la clase ListWC
  * @tparam T
  */
-template <class T> List<T>::List() {
+template <class T> ListWC<T>::ListWC() {
   beginning = nullptr;
   Size = 0;
 }
 /**
- * Constructor por copia de la clase List
+ * Constructor por copia de la clase ListWC
  * @tparam T
  * @param li
  */
-template <class T> List<T>::List(const List<T> &li) {}
+template <class T> ListWC<T>::ListWC(const ListWC<T> &li) {}
 
 /**
  * Metodo para obtener puntero beginning de la lista
  * @tparam T
  * @return beginning de la lista
  */
-template <class T> Node<T> *List<T>::getBeginning() { return beginning; }
+template <class T> NodeWC<T> *ListWC<T>::getBeginning() { return beginning; }
 
 /**
  * Metodo para setear puntero beginning de la lista
@@ -62,7 +62,7 @@ template <class T> Node<T> *List<T>::getBeginning() { return beginning; }
  * @param beginning
  */
 
-template <class T> void List<T>::setBeginning(Node<T> *beginning) {
+template <class T> void ListWC<T>::setBeginning(NodeWC<T> *beginning) {
   this->beginning = beginning;
 }
 
@@ -71,19 +71,19 @@ template <class T> void List<T>::setBeginning(Node<T> *beginning) {
  * @tparam T
  * @return true si la lista esta vacia, sino false
  */
-template <class T> bool List<T>::isEmpty() { return beginning == nullptr; }
+template <class T> bool ListWC<T>::isEmpty() { return beginning == nullptr; }
 /**
  * Metodo para obtener la cantidad de nodos de la lista
  * @tparam T
  * @return la cantidad de nodos de la lista
  */
-template <class T> int List<T>::getSize() { return Size; }
+template <class T> int ListWC<T>::getSize() { return Size; }
 
-template <class T> void List<T>::setSize(int Size) { this->Size = Size; }
+template <class T> void ListWC<T>::setSize(int Size) { this->Size = Size; }
 
-template <class T> void List<T>::autoinsert(T data){
-  Node<T> *auxNode = beginning, *newNode;
-  newNode = new Node<T>(data);
+template <class T> void ListWC<T>::autoinsert(T data){
+  NodeWC<T> *auxNode = beginning, *newNode;
+  newNode = new NodeWC<T>(data);
 
   if (isEmpty()) {
     newNode->setNext(beginning);
@@ -103,11 +103,6 @@ template <class T> void List<T>::autoinsert(T data){
     return;
   }
 
-  if (data.getKey().compare(auxNode->getData()->getKey()) == 0){
-    auxNode->getData()->setCounter(auxNode->getData()->getCounter() + 1);
-    return;
-  }
-
   newNode->setNext(auxNode->getNext());
   auxNode->setNext(newNode);
   Size++;
@@ -119,10 +114,10 @@ template <class T> void List<T>::autoinsert(T data){
  * @param pos lugar donde será insertado el data
  * @param data  data a insert
  */
-template <class T> void List<T>::insert(int pos, T data) {
+template <class T> void ListWC<T>::insert(int pos, T data) {
   int posActual = 0;
-  Node<T> *auxNode = beginning, *newNode;
-  newNode = new Node<T>(data);
+  NodeWC<T> *auxNode = beginning, *newNode;
+  newNode = new NodeWC<T>(data);
 
   if (pos == 0) {
     newNode->setNext(beginning);
@@ -149,9 +144,9 @@ template <class T> void List<T>::insert(int pos, T data) {
  * @tparam T
  * @param data data a insert
  */
-template <class T> void List<T>::insertFirst(T data) {
-  Node<T> *newNode;
-  newNode = new Node<T>(data);
+template <class T> void ListWC<T>::insertFirst(T data) {
+  NodeWC<T> *newNode;
+  newNode = new NodeWC<T>(data);
 
   newNode->setNext(beginning);
   beginning = newNode;
@@ -162,9 +157,9 @@ template <class T> void List<T>::insertFirst(T data) {
  * @tparam T
  * @param data data a insert
  */
-template <class T> void List<T>::insertLast(T data) {
-  Node<T> *auxNode = beginning, *newNode;
-  newNode = new Node<T>(data);
+template <class T> void ListWC<T>::insertLast(T data) {
+  NodeWC<T> *auxNode = beginning, *newNode;
+  newNode = new NodeWC<T>(data);
 
   if (isEmpty()) {
     insertFirst(data);
@@ -184,9 +179,9 @@ template <class T> void List<T>::insertLast(T data) {
  * @tparam T
  * @param pos posicion del nodo a eliminar
  */
-template <class T> void List<T>::remove(int pos) {
+template <class T> void ListWC<T>::remove(int pos) {
   int posActual1 = 0, posActual2 = 0;
-  Node<T> *auxNode1 = beginning, *auxNode2;
+  NodeWC<T> *auxNode1 = beginning, *auxNode2;
 
   if (isEmpty())
     throw 405;
@@ -197,7 +192,7 @@ template <class T> void List<T>::remove(int pos) {
     return;
   }
 
-  // Node anterior al que se desea eliminar
+  // NodeWC anterior al que se desea eliminar
   while (auxNode1 != nullptr && posActual1 < pos - 1) {
     auxNode1 = auxNode1->getNext();
     posActual1++;
@@ -206,7 +201,7 @@ template <class T> void List<T>::remove(int pos) {
   if (auxNode1 == nullptr)
     throw 405;
 
-  // Node que se desea eliminar
+  // NodeWC que se desea eliminar
   auxNode2 = auxNode1->getNext();
 
   auxNode1->setNext(auxNode2->getNext());
@@ -220,8 +215,8 @@ template <class T> void List<T>::remove(int pos) {
  * @param pos posicion del data
  * @return data almacenado en el nodo
  */
-template <class T> T* List<T>::getData(int pos) {
-  Node<T> *auxNode = beginning;
+template <class T> T* ListWC<T>::getData(int pos) {
+  NodeWC<T> *auxNode = beginning;
   int posActual = 0;
 
   if (isEmpty())
@@ -238,8 +233,8 @@ template <class T> T* List<T>::getData(int pos) {
   return auxNode->getData();
 }
 
-template <class T> T *List<T>::searchWord(string Key) {
-  Node<T> *auxNode;
+template <class T> T *ListWC<T>::searchWord(string Key) {
+  NodeWC<T> *auxNode;
   auxNode = beginning;
 
   if (isEmpty())
@@ -261,9 +256,9 @@ template <class T> T *List<T>::searchWord(string Key) {
  * @param pos posicion donde se desea replace
  * @param data newNode data a almacenar
  */
-template <class T> void List<T>::replace(int pos, T data) {
+template <class T> void ListWC<T>::replace(int pos, T data) {
   int posActual = 0;
-  Node<T> *auxNode = beginning;
+  NodeWC<T> *auxNode = beginning;
 
   if (isEmpty())
     throw 407;
@@ -282,18 +277,18 @@ template <class T> void List<T>::replace(int pos, T data) {
  * Función que vacia la lista enlazada
  * @tparam T
  */
-template <class T> void List<T>::empty() {
-  Node<T> *auxNode = beginning;
+template <class T> void ListWC<T>::empty() {
+  NodeWC<T> *auxNode = beginning;
   beginning = nullptr;
   delete auxNode;
   Size = 0;
 }
 
-template <class T> string List<T>::toUpper(string Str) {
+template <class T> string ListWC<T>::toUpper(string Str) {
   for (int i = 0; i < Str.length(); i++) {
     Str[i] = toupper(Str[i]);
   }
   return Str;
 }
 
-#endif // U02_LISTAS_LISTA_LISTA_H_
+#endif // LISTWC_H
