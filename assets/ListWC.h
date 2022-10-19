@@ -285,7 +285,7 @@ template <class T> void ListWC<T>::empty() {
 }
 
 template <class T> string ListWC<T>::toUpper(string Str) {
-  for (int i = 0; i < Str.length(); i++) {
+  for (unsigned int i = 0; i < Str.length(); i++) {
     Str[i] = toupper(Str[i]);
   }
   return Str;

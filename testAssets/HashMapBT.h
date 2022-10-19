@@ -2,13 +2,13 @@
 #define HASHMAPBT_H
 
 #include "BinaryTreeHM.h"
-#include "HashEntryWCE.h"
+#include "../assets/HashEntryWC.h"
 #include <math.h>
 #include <string>
 
 class HashMapBT {
 private:
-  BinaryTreeHM<HashEntry> **Table;
+  BinaryTreeHM<HashEntryWC> **Table;
   unsigned int Size;
   unsigned int hashFunc(string Key);
   string toUpper(string Str);
@@ -27,14 +27,14 @@ public:
 
 HashMapBT::HashMapBT() {
   this->Size = 677;
-  Table = new BinaryTreeHM<HashEntry> *[Size];
-  for (int i = 0; i < Size; i++) {
-    Table[i] = new BinaryTreeHM<HashEntry>;
+  Table = new BinaryTreeHM<HashEntryWC> *[Size];
+  for (unsigned int i = 0; i < Size; i++) {
+    Table[i] = new BinaryTreeHM<HashEntryWC>;
   }
 }
 
 HashMapBT::~HashMapBT() {
-  for (int i = 0; i < Size; i++) {
+  for (unsigned int i = 0; i < Size; i++) {
     if (Table[i] != nullptr) {
       delete Table[i];
     }
@@ -43,7 +43,7 @@ HashMapBT::~HashMapBT() {
 
 unsigned int HashMapBT::getDiffCounter() {
   unsigned int diffWordCount = 0;
-  for (int i = 0; i < Size; i++) {
+  for (unsigned int i = 0; i < Size; i++) {
     if (!Table[i]->isEmpty()) {
       diffWordCount += Table[i]->getDiffCounter();
     }
@@ -53,7 +53,7 @@ unsigned int HashMapBT::getDiffCounter() {
 
 unsigned int HashMapBT::getCounter(string Key) {
   unsigned int pos = hashFunc(Key) % Size;
-  HashEntry *TablePos = Table[pos]->searchWord(Key);
+  HashEntryWC *TablePos = Table[pos]->searchWord(Key);
 
   if (TablePos == nullptr)
     throw 404;
@@ -63,7 +63,7 @@ unsigned int HashMapBT::getCounter(string Key) {
 
 string HashMapBT::getKey(string Key) {
   unsigned int pos = hashFunc(Key) % Size;
-  HashEntry *TablePos = Table[pos]->searchWord(Key);
+  HashEntryWC *TablePos = Table[pos]->searchWord(Key);
 
   if (TablePos == nullptr)
     throw 404;
@@ -73,14 +73,14 @@ string HashMapBT::getKey(string Key) {
 
 void HashMapBT::put(string Key) {
   unsigned int pos = hashFunc(Key) % Size;
-  HashEntry newHE(toUpper(Key));
+  HashEntryWC newHE(toUpper(Key));
   Table[pos]->put(newHE);
 }
 
 void HashMapBT::remove(string Key) {}
 
 bool HashMapBT::isEmpty() {
-  for (int i = 0; i < Size; i++) {
+  for (unsigned int i = 0; i < Size; i++) {
     if (Table[i] != nullptr)
       return false;
   }
@@ -88,7 +88,7 @@ bool HashMapBT::isEmpty() {
 }
 
 string HashMapBT::toUpper(string Str) {
-  for (int i = 0; i < Str.length(); i++) {
+  for (unsigned int i = 0; i < Str.length(); i++) {
     Str[i] = toupper(Str[i]);
   }
   return Str;
@@ -101,7 +101,7 @@ unsigned int HashMapBT::hashFunc(string Key) {
 }
 
 void HashMapBT::print() {
-  for (int i = 0; i < Size; i++) {
+  for (unsigned int i = 0; i < Size; i++) {
     if (!Table[i]->isEmpty()) {
       Table[i]->inorder();
       cout << endl << endl;

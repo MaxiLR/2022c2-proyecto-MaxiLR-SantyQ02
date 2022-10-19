@@ -1,5 +1,5 @@
-#ifndef TREENODEHE_H
-#define TREENODEHE_H
+#ifndef TREENODEWC_H
+#define TREENODEWC_H
 
 #include <iostream>
 
@@ -49,4 +49,4 @@ public:
   }
 };
 
-#endif // TREENODEHE_H
+#endif // TREENODEWC_H

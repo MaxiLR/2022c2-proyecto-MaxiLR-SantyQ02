@@ -20,6 +20,7 @@ public:
   unsigned int getLineCount();
   unsigned int getDiffWordCount();
   void defaultUse(string Filename);
+  void words(string Filename, unsigned int n = 0);
 };
 
 WordCounter::WordCounter() {
@@ -54,10 +55,22 @@ void WordCounter::defaultUse(string Filename) {
 }
 
 string WordCounter::toUpper(string Str) {
-  for (int i = 0; i < Str.length(); i++) {
+  for (unsigned int i = 0; i < Str.length(); i++) {
     Str[i] = toupper(Str[i]);
   }
   return Str;
+}
+
+void words(string Filename, unsigned int n) {
+  ifstream file(Filename);
+  DictionaryTree DT;
+  string word;
+  while (!file.eof()) {
+    file >> word;
+    DT.put(word);
+  }
+  file.close();
+  DT.inorder(n);
 }
 
 #endif // WORDCOUNTER_H

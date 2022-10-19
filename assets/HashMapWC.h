@@ -4,7 +4,6 @@
 #include "HashEntryWC.h"
 #include "ListWC.h"
 #include <math.h>
-#include <string>
 
 class HashMapWC {
 private:
@@ -30,13 +29,13 @@ HashMapWC::HashMapWC(unsigned int Size) {
   this->Size = Size;
   this->HECounter = 0;
   Table = new ListWC<HashEntryWC> *[Size];
-  for (int i = 0; i < Size; i++) {
+  for (unsigned int i = 0; i < Size; i++) {
     Table[i] = new ListWC<HashEntryWC>;
   }
 }
 
 HashMapWC::~HashMapWC() {
-  for (int i = 0; i < Size; i++) {
+  for (unsigned int i = 0; i < Size; i++) {
     if (Table[i] != nullptr) {
       delete Table[i];
     }
@@ -82,7 +81,7 @@ void HashMapWC::put(string Key) {
 void HashMapWC::remove(string Key) {}
 
 bool HashMapWC::esVacio() {
-  for (int i = 0; i < Size; i++) {
+  for (unsigned int i = 0; i < Size; i++) {
     if (Table[i] != nullptr)
       return false;
   }
@@ -90,7 +89,7 @@ bool HashMapWC::esVacio() {
 }
 
 string HashMapWC::toUpper(string Str) {
-  for (int i = 0; i < Str.length(); i++) {
+  for (unsigned int i = 0; i < Str.length(); i++) {
     Str[i] = toupper(Str[i]);
   }
   return Str;
@@ -98,8 +97,9 @@ string HashMapWC::toUpper(string Str) {
 
 unsigned int HashMapWC::hashFunc(string Key) {
   unsigned int hash;
-  for (int i = 0; i < Key.length(); i++) {
+  for (unsigned int i = 0; i < Key.length(); i++) {
     hash = 31 * hash + toupper(Key[i]);
+  }
   return hash;
 }
 

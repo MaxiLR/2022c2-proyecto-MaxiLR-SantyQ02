@@ -13,7 +13,7 @@ public:
   DictionaryTree();
   void put(string Word);
   unsigned int search(string Word);
-  void inorder();
+  void inorder(unsigned int n);
   unsigned int getDiffCounter();
 };
 
@@ -55,11 +55,12 @@ unsigned int DictionaryTree::search(string Word) {
   }
 }
 
-void DictionaryTree::inorder() {
-  AG->inorder();
-  HN->inorder();
-  OU->inorder();
-  VZ->inorder();
+void DictionaryTree::inorder(unsigned int n) {
+  AG->inorderN(n);
+  HN->inorderN(n - AG->getDiffCounter());
+  OU->inorderN(n - AG->getDiffCounter() - OU->getDiffCounter());
+  VZ->inorderN(n - AG->getDiffCounter() - HN->getDiffCounter() -
+              OU->getDiffCounter());
 }
 
 unsigned int DictionaryTree::getDiffCounter() {
@@ -68,7 +69,7 @@ unsigned int DictionaryTree::getDiffCounter() {
 }
 
 string DictionaryTree::toUpper(string Word) {
-  for (int i = 0; i < Word.length(); i++) {
+  for (unsigned int i = 0; i < Word.length(); i++) {
     Word[i] = toupper(Word[i]);
   }
   return Word;
