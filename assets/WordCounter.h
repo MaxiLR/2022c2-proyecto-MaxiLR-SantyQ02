@@ -52,6 +52,22 @@ void WordCounter::defaultUse(string Filename) {
     DiffWordCount = HM.getHECount();
   }
   file.close();
+  cout.sync_with_stdio(false);
+  cout << "WORDS: " << WordCount << " | LETTERS: " << LetterCount
+       << " | LINES: " << LineCount << " | DIFFWORDS: " << DiffWordCount;
+}
+
+void WordCounter::words(string Filename, unsigned int n) {
+  ifstream file(Filename);
+  BinaryTreeWC DT;
+  string word;
+  while (!file.eof()) {
+    file >> word;
+    DT.put(word);
+  }
+  file.close();
+  cout.sync_with_stdio(false);
+  DT.inorderN(n);
 }
 
 string WordCounter::toUpper(string Str) {
@@ -59,18 +75,6 @@ string WordCounter::toUpper(string Str) {
     Str[i] = toupper(Str[i]);
   }
   return Str;
-}
-
-void words(string Filename, unsigned int n) {
-  ifstream file(Filename);
-  DictionaryTree DT;
-  string word;
-  while (!file.eof()) {
-    file >> word;
-    DT.put(word);
-  }
-  file.close();
-  DT.inorder(n);
 }
 
 #endif // WORDCOUNTER_H

@@ -5,6 +5,8 @@
 #define TEXT_1 "testTexts/txt.txt"
 #define TEXT_2 "testTexts/Words.txt"
 #define TEXT_3 "testTexts/mucho_texto.txt"
+#define TEXT_4 "testTexts/spanish.txt"
+#define TEXT_5 "testTexts/modelo.txt"
 
 using namespace std;
 
@@ -38,7 +40,7 @@ int main() {
 
   clock_t begin = clock();
 
-  WC.words("testTexts/txt.txt");
+  WC.words(TEXT_4);
 
   clock_t end = clock();
 
@@ -47,6 +49,6 @@ int main() {
   //      << " | LINES: " << WC.getLineCount()
   //      << " | DIFFWORDS: " << WC.getDiffWordCount() << endl;
   double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
-  cout << "Tiempo: " << elapsed_secs << "\n";
+  cout << endl << "Tiempo: " << elapsed_secs << "\n";
   return 0;
 }

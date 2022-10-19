@@ -10,7 +10,7 @@ private:
   void put(string Word, TreeNodeWC<string> *r);
   void preorder(TreeNodeWC<string> *r);
   void inorder(TreeNodeWC<string> *r);
-  void inorderN(TreeNodeWC<string> *r, unsigned int n);
+  void inorderN(TreeNodeWC<string> *r, unsigned int n, unsigned int &count);
   void postorder(TreeNodeWC<string> *r);
   int diffCounter;
 
@@ -120,11 +120,13 @@ void BinaryTreeWC::preorder(TreeNodeWC<string> *r) {
  * Recorre un árbol en orden
  */
 void BinaryTreeWC::inorderN(int n) {
-  if (n == 0 || n > diffCounter) {
+  if (n == 0 || n >= diffCounter) {
     inorder(root);
     return;
-  }
-  inorderN(root, n);
+  } else if (n < 0)
+    return;
+  unsigned int i = 0;
+  inorderN(root, n, i);
 }
 
 void BinaryTreeWC::inorder(TreeNodeWC<string> *r) {
@@ -135,15 +137,19 @@ void BinaryTreeWC::inorder(TreeNodeWC<string> *r) {
   inorder(r->getRight());
 }
 
-void BinaryTreeWC::inorderN(TreeNodeWC<string> *r, unsigned int n) {
-  if (n == 0)
-    return;
+void BinaryTreeWC::inorderN(TreeNodeWC<string> *r, unsigned int n, unsigned int &count) {
   if (r == nullptr)
     return;
-  inorderN(r->getLeft(), n - 1);
-  cout << r->getData() << " ";
-  inorderN(r->getRight(), n - 2);
+  if (count == n)
+    return;
+  inorderN(r->getLeft(), n, count);
+  if (n > count) {
+    cout << r->getData() << " ";
+    count++;
+    inorderN(r->getRight(), n, count);
+  }
 }
+
 
 /**
  * Recorre un árbol en postorden

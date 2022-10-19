@@ -7,17 +7,6 @@
 
 using namespace std;
 
-// long double hashFunc(string Word) {
-//   long double hash = 0;
-//   for (int i = 0; i < Word.length(); i++) {
-//     cout << int(Word[i]) << endl;
-//     hash += int(Word[i]) * pow(100, 23 - i);
-//   }
-//   return hash;
-// }
-
-// int main() { cout << hashFunc("HOLAAAAA") << " | " << hashFunc("HOLB"); }
-
 string toUpper(string Str) {
     for (int i = 0; i < Str.length(); i++) {
         Str[i] = toupper(Str[i]);
@@ -27,99 +16,33 @@ string toUpper(string Str) {
 
 int main() {
 
-  // clock_t begin = clock();
+  const char *teststring = "Test output string\n";
+  clock_t start, end;
+  double duration;
 
-  // string word;
-  // HashMap Hm;
-  // ifstream file(TEXT_3);
+  cout << "Starting cout test." << endl;
+  start = clock();
 
-  // while (!file.eof()) {
-  //   file >> word;
-  //   Hm.put(word);
-  // }
+  std::ios_base::sync_with_stdio(false);
 
-  // clock_t end = clock();
-  // double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
+  for (int i = 0; i < 1000; i++)
+    cout << teststring;
+  /* Display timing results, code trimmed for brevity */
 
-  // cout << "Cantidad de colisiones: " << Hm.getCollitionCounter() << endl;
-  // cout << "Palabras diferentes: " << Hm.getHECounter() << endl;
-  // cout << "Tiempo: " << elapsed_secs;
+  end = clock();
+  double long elapsed_sec = static_cast<double>(end - start) / CLOCKS_PER_SEC;
 
-  // ifstream file("txt.txt");
-  // string word;
-  // while (file >> word) {
-  //   for (auto c : word)
-  //     if (ispunct(c) && c != '`')
-  //       word.erase(word.find_first_of(c));
-  //   cout << word << endl;
-  // }
+  std::ios_base::sync_with_stdio(false);
 
-  string word;
-
-  clock_t begin;
-  begin = clock();
-
-  TreeHashMap TH;
-
-  try {
-    ifstream file(TEXT_3);
-    while (!file.eof()) {
-      file >> word;
-      TH.put(word);
-    }
-    file.close();
-  } catch (int err) {
-    cerr << "Error " << err << "!" << endl;
+  start = clock();
+  for (int i = 0; i < 1000; i++) {
+    printf(teststring);
   }
-  clock_t end = clock();
-  double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
+  end = clock();
+  double long elpased_se = static_cast<double>(end - start) / CLOCKS_PER_SEC;
+  /* Display timing results, code trimmed for brevity */
 
-  cout << "Tiempo del Tree Hash: " << elapsed_secs << "\n" << endl;
-  cout << "Palabras Diferentes: " << TH.getCounter("HOLA") << endl;
-
-  // Arbol Dictionario:
-
-  clock_t begin3;
-  begin3 = clock();
-
-  DictionaryTree DT;
-
-  ifstream file3(TEXT_3);
-  while (!file3.eof()) {
-    file3 >> word;
-    DT.put(word);
-  }
-  file3.close();
-
-  clock_t end3 = clock();
-  double elapsed_secs3 = static_cast<double>(end3 - begin3) / CLOCKS_PER_SEC;
-  cout << "Tiempo del Arbol Diccionario: " << elapsed_secs3 << "\n" << endl;
-
-  cout << "Palabras diferentes: " << DT.() << endl;
-
-  // Arbol:
-
-     clock_t begin2;
-     begin2 = clock();
-
-     BinaryTree BT;
-
-     ifstream file2(TEXT_3);
-     while (!file2.eof()) {
-       try {
-         file2 >> word;
-         BT.put(toUpper(word));
-       } catch (int err) {
-       }
-     }
-     file2.close();
-
-
-     clock_t end2 = clock();
-     double elapsed_secs2 = static_cast<double>(end2 - begin2) / CLOCKS_PER_SEC;
-     cout << "Tiempo del Arbol Binario: " << elapsed_secs2 << "\n" << endl;
-
-    cout << "Palabras diferentes: " << BT.getDiffCounter() << endl;
+  cout << "Tiempo del COUT: " << elapsed_sec << " | Tiempo del PrintF: " << elpased_se;
 
   return 0;
 }
