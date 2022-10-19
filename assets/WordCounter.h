@@ -3,6 +3,7 @@
 
 #include "DictionaryTree.h"
 #include "HashMapWC.h"
+#include "OcurrencyQueue.h"
 #include <algorithm>
 #include <fstream>
 
@@ -21,6 +22,7 @@ public:
   unsigned int getDiffWordCount();
   void defaultUse(string Filename);
   void words(string Filename, unsigned int n = 0);
+  void ocurrencies(string Filename, unsigned int n = 0);
 };
 
 WordCounter::WordCounter() {
@@ -68,6 +70,25 @@ void WordCounter::words(string Filename, unsigned int n) {
   file.close();
   cout.sync_with_stdio(false);
   DT.inorderN(n);
+}
+
+void WordCounter::ocurrencies(string Filename, unsigned int n){
+  ifstream file(Filename);
+
+  OcurrencyQueue<HashEntryWC> OC;
+  HashMapWC HM(499979);
+  string word;
+
+  while (!file.eof()) {
+    file >> word;
+    HM.put(word);
+  }
+  file.close();
+
+  cout.sync_with_stdio(false);
+
+  OC.loadQueue(HM);
+  OC.printN(n);
 }
 
 string WordCounter::toUpper(string Str) {

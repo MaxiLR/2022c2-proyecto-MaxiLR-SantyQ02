@@ -1,51 +1,71 @@
 #ifndef OCURRENCYQUEUE_H
 #define OCURRENCYQUEUE_H
 
+#include "HashMapWC.h"
 #include "NodeWC.h"
 
 template <class T> class OcurrencyQueue {
 private:
   NodeWC<T> *first, *last;
+  unsigned int Size;
 
 public:
   OcurrencyQueue();
   ~OcurrencyQueue();
   void push(T data);
-  void ocurrencyPush(T data, int ocurrency);
   T pull();
+  void loadQueue(HashMapWC HM);
   bool isEmpty();
+  void printN(unsigned int n = 0);
 };
 
 template <class T> OcurrencyQueue<T>::OcurrencyQueue() {
   first = nullptr;
   last = nullptr;
+  Size = 0;
 }
 
 template <class T> OcurrencyQueue<T>::~OcurrencyQueue() {
   while (!isEmpty()) {
     pull();
   }
-
   delete first;
   delete last;
 }
 
 template <class T> void OcurrencyQueue<T>::push(T data) {
-  NodeWC<T> *new = new NodeWC<T>(data);
+  NodeWC<T> *auxNode = first, *newNode = new NodeWC<T>(data);
 
-  if (isEmpty())
-    first = new;
-  else
-    last->setNext(new);
+  if (isEmpty()) {
+    first = newNode;
+    last = newNode;
+    newNode->setNext(nullptr);
+    Size++;
+    return;
+  }
 
-  last = new;
+  while (auxNode->getNext() != nullptr &&
+         data.getCounter() > auxNode->getData()->getCounter()) {
+    auxNode = auxNode->getNext();
+  }
+
+  if (auxNode->getNext() == nullptr) {
+    auxNode->setNext(newNode);
+    last = newNode;
+    Size++;
+    return;
+  }
+
+  newNode->setNext(auxNode->getNext());
+  auxNode->setNext(newNode);
+  Size++;
 }
 
 template <class T> T OcurrencyQueue<T>::pull() {
   if (isEmpty())
     throw 400;
 
-  T data = first->getDato();
+  T data = *first->getData();
   NodeWC<T> *toDelete = first;
   first = first->getNext();
 
@@ -56,41 +76,32 @@ template <class T> T OcurrencyQueue<T>::pull() {
   return data;
 }
 
+template <class T> void OcurrencyQueue<T>::loadQueue(HashMapWC HM) {
+  for (unsigned int i = 0; i < HM.getSize(); i++) {
+    NodeWC<HashEntryWC> *auxNode = HM.getBeginning(i);
+    if (auxNode != nullptr) {
+      while (auxNode != nullptr) {
+        push(*auxNode->getData());
+        auxNode = auxNode->getNext();
+      }
+    }
+  }
+}
+
+template <class T> void OcurrencyQueue<T>::printN(unsigned int n) {
+  if (n == 0 || n >= Size) {
+    for (unsigned int i = 0; i < Size; i++) {
+      T HashEntry = pull();
+      cout << HashEntry.getKey() << " " << HashEntry.getCounter() << "\n";
+    }
+  } else {
+    for (unsigned int i = 0; i < n; i++) {
+      T HashEntry = pull();
+      cout << HashEntry.getKey() << " " << HashEntry.getCounter() << "\n";
+    }
+  }
+}
+
 template <class T> bool OcurrencyQueue<T>::isEmpty() { return last == nullptr; }
 
-template <class T>
-void OcurrencyQueue<T>::ocurrencyPush(T data) {
-  if (ocurrency >= WO_PRIORITY) {
-    push(data);
-    return;
-  }
-
-  NodeWC<T> *new = new NodeWC<T>(data, ocurrency);
-
-  if (isEmpty()) {
-    new->setNext(nullptr);
-    first = new;
-    last = new;
-    return;
-  }
-  if (first->getPrioridad() > ocurrency) {
-    new->setNext(first);
-    first = new;
-    return;
-  }
-  if (first->getNext() == nullptr) {
-
-    first->setNext(new);
-    last = new;
-    return;
-  }
-  NodeWC<T> *aux = first;
-  while (aux->getNext() != nullptr &&
-         aux->getNext()->getPrioridad() <= ocurrency) {
-    aux = aux->getNext();
-  }
-
-  new->setNext(aux->getNext());
-  aux->setNext(new);
-}
 #endif // OCURRENCYQUEUE_H

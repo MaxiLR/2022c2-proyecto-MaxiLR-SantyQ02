@@ -15,13 +15,15 @@ private:
 
 public:
   explicit HashMapWC(unsigned int Size);
+  ~HashMapWC();
+  NodeWC<HashEntryWC>* getBeginning(unsigned int i);
   unsigned int getEmptyCells();
   unsigned int getHECount();
   unsigned int getCounter(string Key);
+  unsigned int getSize();
   string getKey(string Key);
   void put(string Key);
   void remove(string Key);
-  ~HashMapWC();
   bool esVacio();
 };
 
@@ -40,6 +42,10 @@ HashMapWC::~HashMapWC() {
       delete Table[i];
     }
   }
+}
+
+NodeWC<HashEntryWC> *HashMapWC::getBeginning(unsigned int i){
+  return Table[i]->getBeginning();
 }
 
 unsigned int HashMapWC::getHECount() { return HECounter; }
@@ -63,6 +69,8 @@ string HashMapWC::getKey(string Key) {
 
   return TablePos->getKey();
 }
+
+unsigned int HashMapWC::getSize() { return Size; }
 
 void HashMapWC::put(string Key) {
   unsigned int pos = hashFunc(Key) % Size;
