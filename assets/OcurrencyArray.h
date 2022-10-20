@@ -17,9 +17,9 @@ public:
 };
 
 OcurrencyArray::OcurrencyArray(HashMapWC HM) {
-  this->Array = new HashEntryWC *[Size];
-  this->HMPtr = &HM;
   this->Size = HM.getHECount();
+  this->HMPtr = &HM;
+  this->Array = new HashEntryWC *[Size];
 }
 
 void OcurrencyArray::loadArray() {
