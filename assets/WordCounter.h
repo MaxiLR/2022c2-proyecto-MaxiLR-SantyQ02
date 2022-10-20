@@ -5,6 +5,7 @@
 #include "DictionaryTree.h"
 #include "HashMapWC.h"
 #include "OcurrencyQueue.h"
+#include "OcurrencyArray.h"
 #include <algorithm>
 #include <fstream>
 
@@ -22,7 +23,8 @@ public:
   unsigned int getLineCount();
   unsigned int getDiffWordCount();
   void defaultUse(string Filename);
-  void words(string Filename, unsigned int n = 0);
+  void wordsDT(string Filename, unsigned int n = 0);
+  void wordsHMBT(string Filename, unsigned int n = 0);
   void ocurrencies(string Filename, unsigned int n = 0);
 };
 
@@ -47,6 +49,12 @@ void WordCounter::defaultUse(string Filename) {
   string word;
   while (!file.eof()) {
     file >> word;
+    for (int i = 0; i < word.length(); i++) {
+      if (ispunct(word[i])) {
+        word.erase(word.begin() + i);
+        i = -1;
+      }
+    }
     LetterCount += word.length();
     WordCount++;
     HM.put(word);
@@ -60,38 +68,73 @@ void WordCounter::defaultUse(string Filename) {
        << " | LINES: " << LineCount << " | DIFFWORDS: " << DiffWordCount;
 }
 
-void WordCounter::words(string Filename, unsigned int n) {
+void WordCounter::wordsDT(string Filename, unsigned int n) {
   ifstream file(Filename);
-  // DictionaryTree DT;
+  DictionaryTree DT;
+  string word;
+  while (!file.eof()) {
+    file >> word;
+    for (int i = 0; i < word.length(); i++) {
+      if (ispunct(word[i])) {
+        word.erase(word.begin() + i);
+        i = -1;
+      }
+    }
+    DT.put(word);
+  }
+  file.close();
+  cout.sync_with_stdio(false);
+  DT.inorder(n);
+}
+
+void WordCounter::wordsHMBT(string Filename, unsigned int n) {
+  ifstream file(Filename);
   HashMapBT HMBT;
   string word;
   while (!file.eof()) {
     file >> word;
-    // DT.put(word);
+    for (int i = 0; i < word.length(); i++) {
+      if (ispunct(word[i])) {
+        word.erase(word.begin() + i);
+        i = -1;
+      }
+    }
     HMBT.put(word);
   }
   file.close();
   cout.sync_with_stdio(false);
-  // DT.inorder(n);
+  HMBT.print();
 }
 
 void WordCounter::ocurrencies(string Filename, unsigned int n) {
   ifstream file(Filename);
 
-  OcurrencyQueue<HashEntryWC> OC;
+  // OcurrencyQueue<HashEntryWC> OC;
+
   HashMapWC HM(499979);
   string word;
 
   while (!file.eof()) {
     file >> word;
+    for (int i = 0; i < word.length(); i++) {
+      if (ispunct(word[i])) {
+        word.erase(word.begin() + i);
+        i = -1;
+      }
+    }
     HM.put(word);
   }
   file.close();
 
+  OcurrencyArray OA(HM);
+
+  OA.loadArray();
+
   cout.sync_with_stdio(false);
 
-  OC.loadQueue(HM);
-  OC.printN(n);
+  OA.printN(n);
+  // OC.loadQueue(HM);
+  // OC.printN(n);
 }
 
 string WordCounter::toUpper(string Str) {

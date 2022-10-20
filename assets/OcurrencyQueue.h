@@ -2,7 +2,6 @@
 #define OCURRENCYQUEUE_H
 
 #include "HashMapWC.h"
-#include "NodeWC.h"
 
 template <class T> class OcurrencyQueue {
 private:
