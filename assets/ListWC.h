@@ -28,8 +28,8 @@ public:
   void insertFirst(T data);
   void insertLast(T data);
   void remove(int pos);
-  T* getData(int pos);
-  T* searchWord(string Key);
+  T *getData(int pos);
+  T *searchWord(string Key);
   void replace(int pos, T data);
   void empty();
 };
@@ -81,23 +81,29 @@ template <class T> int ListWC<T>::getSize() { return Size; }
 
 template <class T> void ListWC<T>::setSize(int Size) { this->Size = Size; }
 
-template <class T> void ListWC<T>::autoinsert(T data){
-  NodeWC<T> *auxNode = beginning, *newNode;
-  newNode = new NodeWC<T>(data);
+template <class T> void ListWC<T>::autoinsert(T data) {
+  NodeWC<T> *auxNode = beginning, *newNode = new NodeWC<T>(data);
+  newNode->setNext(nullptr);
 
   if (isEmpty()) {
+    beginning = newNode;
+    Size++;
+    return;
+  }
+
+  if (data.getKey().compare(auxNode->getData()->getKey()) < 0) {
     newNode->setNext(beginning);
     beginning = newNode;
     Size++;
     return;
   }
 
-  while (auxNode->getNext() != nullptr && data.getKey().compare(auxNode->getNext()->getData()->getKey()) > 0) {
+  while (auxNode->getNext() != nullptr &&
+         data.getKey().compare(auxNode->getNext()->getData()->getKey()) > 0) {
     auxNode = auxNode->getNext();
   }
 
   if (auxNode->getNext() == nullptr) {
-    newNode->setNext(nullptr);
     auxNode->setNext(newNode);
     Size++;
     return;
@@ -215,7 +221,7 @@ template <class T> void ListWC<T>::remove(int pos) {
  * @param pos posicion del data
  * @return data almacenado en el nodo
  */
-template <class T> T* ListWC<T>::getData(int pos) {
+template <class T> T *ListWC<T>::getData(int pos) {
   NodeWC<T> *auxNode = beginning;
   int posActual = 0;
 

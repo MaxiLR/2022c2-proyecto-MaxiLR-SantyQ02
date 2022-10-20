@@ -61,7 +61,7 @@ void WordCounter::defaultUse(string Filename) {
 
 void WordCounter::words(string Filename, unsigned int n) {
   ifstream file(Filename);
-  BinaryTreeWC DT;
+  DictionaryTree DT;
   string word;
   while (!file.eof()) {
     file >> word;
@@ -69,7 +69,7 @@ void WordCounter::words(string Filename, unsigned int n) {
   }
   file.close();
   cout.sync_with_stdio(false);
-  DT.inorderN(n);
+  DT.inorder(n);
 }
 
 void WordCounter::ocurrencies(string Filename, unsigned int n){

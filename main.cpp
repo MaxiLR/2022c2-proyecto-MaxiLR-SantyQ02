@@ -40,7 +40,7 @@ int main() {
 
   clock_t begin = clock();
 
-  WC.ocurrencies(TEXT_3);
+  WC.ocurrencies(TEXT_1, 2);
 
   clock_t end = clock();
 

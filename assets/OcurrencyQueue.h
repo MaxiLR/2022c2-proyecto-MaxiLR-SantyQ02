@@ -35,17 +35,25 @@ template <class T> OcurrencyQueue<T>::~OcurrencyQueue() {
 
 template <class T> void OcurrencyQueue<T>::push(T data) {
   NodeWC<T> *auxNode = first, *newNode = new NodeWC<T>(data);
+  newNode->setNext(nullptr);
 
   if (isEmpty()) {
     first = newNode;
     last = newNode;
-    newNode->setNext(nullptr);
+    Size++;
+    return;
+  }
+
+  if (newNode->getData()->getCounter() >= first->getData()->getCounter()) {
+    newNode->setNext(first);
+    first = newNode;
     Size++;
     return;
   }
 
   while (auxNode->getNext() != nullptr &&
-         data.getCounter() > auxNode->getData()->getCounter()) {
+         newNode->getData()->getCounter() <
+             auxNode->getNext()->getData()->getCounter()) {
     auxNode = auxNode->getNext();
   }
 
@@ -62,11 +70,12 @@ template <class T> void OcurrencyQueue<T>::push(T data) {
 }
 
 template <class T> T OcurrencyQueue<T>::pull() {
+  NodeWC<T> *toDelete = first;
+
   if (isEmpty())
     throw 400;
 
   T data = *first->getData();
-  NodeWC<T> *toDelete = first;
   first = first->getNext();
 
   if (first == nullptr)
@@ -79,11 +88,9 @@ template <class T> T OcurrencyQueue<T>::pull() {
 template <class T> void OcurrencyQueue<T>::loadQueue(HashMapWC HM) {
   for (unsigned int i = 0; i < HM.getSize(); i++) {
     NodeWC<HashEntryWC> *auxNode = HM.getBeginning(i);
-    if (auxNode != nullptr) {
-      while (auxNode != nullptr) {
-        push(*auxNode->getData());
-        auxNode = auxNode->getNext();
-      }
+    while (auxNode != nullptr) {
+      push(*auxNode->getData());
+      auxNode = auxNode->getNext();
     }
   }
 }
