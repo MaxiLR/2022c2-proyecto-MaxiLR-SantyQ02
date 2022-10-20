@@ -26,7 +26,7 @@ public:
 };
 
 HashMapBT::HashMapBT() {
-  this->Size = 677;
+  this->Size = 256;
   Table = new BinaryTreeHM<HashEntryWC> *[Size];
   for (unsigned int i = 0; i < Size; i++) {
     Table[i] = new BinaryTreeHM<HashEntryWC>;
@@ -95,9 +95,9 @@ string HashMapBT::toUpper(string Str) {
 }
 
 unsigned int HashMapBT::hashFunc(string Key) {
-  if (toupper(Key[0]) < 65 || toupper(Key[0]) > 90)
-    return 26;
-  return toupper(Key[0]) - 65;
+  // if (toupper(Key[0]) < 65 || toupper(Key[0]) > 90)
+  //   return 26;
+  return toupper(Key[0]); // -65
 }
 
 void HashMapBT::print() {

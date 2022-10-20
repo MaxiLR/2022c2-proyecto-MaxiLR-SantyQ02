@@ -40,14 +40,10 @@ int main() {
 
   clock_t begin = clock();
 
-  WC.ocurrencies(TEXT_1, 2);
+  WC.ocurrencies(TEXT_1);
 
   clock_t end = clock();
 
-  // cout << "WORDS: " << WC.getWordCount()
-  //      << " | LETTERS: " << WC.getLetterCount()
-  //      << " | LINES: " << WC.getLineCount()
-  //      << " | DIFFWORDS: " << WC.getDiffWordCount() << endl;
   double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
   cout << endl << "Tiempo: " << elapsed_secs << "\n";
   return 0;

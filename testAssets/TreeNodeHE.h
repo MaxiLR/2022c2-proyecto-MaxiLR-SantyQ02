@@ -1,5 +1,5 @@
-#ifndef TREENODEWC_H
-#define TREENODEWC_H
+#ifndef TREENODEHE_H
+#define TREENODEHE_H
 
 #include <iostream>
 

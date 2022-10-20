@@ -1,6 +1,7 @@
 #ifndef WORDCOUNTER_H
 #define WORDCOUNTER_H
 
+#include "../testAssets/HashMapBT.h"
 #include "DictionaryTree.h"
 #include "HashMapWC.h"
 #include "OcurrencyQueue.h"
@@ -61,18 +62,20 @@ void WordCounter::defaultUse(string Filename) {
 
 void WordCounter::words(string Filename, unsigned int n) {
   ifstream file(Filename);
-  DictionaryTree DT;
+  // DictionaryTree DT;
+  HashMapBT HMBT;
   string word;
   while (!file.eof()) {
     file >> word;
-    DT.put(word);
+    // DT.put(word);
+    HMBT.put(word);
   }
   file.close();
   cout.sync_with_stdio(false);
-  DT.inorder(n);
+  // DT.inorder(n);
 }
 
-void WordCounter::ocurrencies(string Filename, unsigned int n){
+void WordCounter::ocurrencies(string Filename, unsigned int n) {
   ifstream file(Filename);
 
   OcurrencyQueue<HashEntryWC> OC;

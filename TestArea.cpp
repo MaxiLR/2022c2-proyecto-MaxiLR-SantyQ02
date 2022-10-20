@@ -16,33 +16,39 @@ string toUpper(string Str) {
 
 int main() {
 
-  const char *teststring = "Test output string\n";
-  clock_t start, end;
-  double duration;
+  // const char *teststring = "Test output string\n";
+  // clock_t start, end;
+  // double duration;
 
-  cout << "Starting cout test." << endl;
-  start = clock();
+  // cout << "Starting cout test." << endl;
+  // start = clock();
 
-  std::ios_base::sync_with_stdio(false);
+  // std::ios_base::sync_with_stdio(false);
 
-  for (int i = 0; i < 1000; i++)
-    cout << teststring;
-  /* Display timing results, code trimmed for brevity */
+  // for (int i = 0; i < 1000; i++)
+  //   cout << teststring;
+  // /* Display timing results, code trimmed for brevity */
 
-  end = clock();
-  double long elapsed_sec = static_cast<double>(end - start) / CLOCKS_PER_SEC;
+  // end = clock();
+  // double long elapsed_sec = static_cast<double>(end - start) / CLOCKS_PER_SEC;
 
-  std::ios_base::sync_with_stdio(false);
+  // std::ios_base::sync_with_stdio(false);
 
-  start = clock();
-  for (int i = 0; i < 1000; i++) {
-    printf(teststring);
-  }
-  end = clock();
-  double long elpased_se = static_cast<double>(end - start) / CLOCKS_PER_SEC;
-  /* Display timing results, code trimmed for brevity */
+  // start = clock();
+  // for (int i = 0; i < 1000; i++) {
+  //   printf(teststring);
+  // }
+  // end = clock();
+  // double long elpased_se = static_cast<double>(end - start) / CLOCKS_PER_SEC;
+  // /* Display timing results, code trimmed for brevity */
 
-  cout << "Tiempo del COUT: " << elapsed_sec << " | Tiempo del PrintF: " << elpased_se;
+  // cout << "Tiempo del COUT: " << elapsed_sec << " | Tiempo del PrintF: " << elpased_se;
+
+  char a = 'á';
+
+  a = toupper(a);
+
+  cout << char(161);
 
   return 0;
 }
