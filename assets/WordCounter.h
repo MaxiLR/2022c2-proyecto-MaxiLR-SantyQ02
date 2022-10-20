@@ -109,7 +109,7 @@ void WordCounter::wordsHMBT(string Filename, unsigned int n) {
 void WordCounter::ocurrencies(string Filename, unsigned int n) {
   ifstream file(Filename);
 
-  // OcurrencyQueue<HashEntryWC> OC;
+  OcurrencyQueue<HashEntryWC> OC;
 
   HashMapWC HM(499979);
   string word;
@@ -126,15 +126,15 @@ void WordCounter::ocurrencies(string Filename, unsigned int n) {
   }
   file.close();
 
-  OcurrencyArray OA(HM);
-
-  OA.loadArray();
+  // OcurrencyArray OA(HM.getHECount());
+  // OA.loadArray(HM);
 
   cout.sync_with_stdio(false);
 
-  OA.printN(n);
-  // OC.loadQueue(HM);
-  // OC.printN(n);
+  // OA.printN(n);
+  OC.loadQueue(HM);
+  OC.printN(n);
+  
 }
 
 string WordCounter::toUpper(string Str) {

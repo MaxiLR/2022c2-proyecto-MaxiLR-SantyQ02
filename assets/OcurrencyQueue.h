@@ -13,7 +13,7 @@ public:
   ~OcurrencyQueue();
   void push(T data);
   T pull();
-  void loadQueue(HashMapWC HM);
+  void loadQueue(HashMapWC &HM);
   bool isEmpty();
   void printN(unsigned int n = 0);
 };
@@ -84,7 +84,7 @@ template <class T> T OcurrencyQueue<T>::pull() {
   return data;
 }
 
-template <class T> void OcurrencyQueue<T>::loadQueue(HashMapWC HM) {
+template <class T> void OcurrencyQueue<T>::loadQueue(HashMapWC &HM) {
   for (unsigned int i = 0; i < HM.getSize(); i++) {
     NodeWC<HashEntryWC> *auxNode = HM.getBeginning(i);
     while (auxNode != nullptr) {

@@ -6,34 +6,33 @@
 class OcurrencyArray {
 private:
   HashEntryWC **Array;
-  HashMapWC *HMPtr;
   unsigned int Size;
 
 public:
-  OcurrencyArray(HashMapWC HM);
-  void loadArray();
+  OcurrencyArray(unsigned int Size);
+  void loadArray(HashMapWC &HM);
   void quickSort(HashEntryWC **arr, int inicio, int fin);
   void printN(unsigned int n = 0);
 };
 
-OcurrencyArray::OcurrencyArray(HashMapWC HM) {
-  this->Size = HM.getHECount();
-  this->HMPtr = &HM;
+OcurrencyArray::OcurrencyArray(unsigned int Size) {
+  this->Size = Size;
   this->Array = new HashEntryWC *[Size];
 }
 
-void OcurrencyArray::loadArray() {
-  for (int i = 0; i < HMPtr->getSize(); i++) {
-    NodeWC<HashEntryWC> *auxNode = HMPtr->getBeginning(i);
-    for (int j = 0; j < Size; j++) {
-      while (auxNode != nullptr) {
-        Array[j] = auxNode->getData();
-        auxNode = auxNode->getNext();
-        j++;
-      }
+void OcurrencyArray::loadArray(HashMapWC &HM) {
+  unsigned int j = 0;
+  for (int i = 0; i < HM.getSize(); i++) {
+    NodeWC<HashEntryWC> *auxNode = HM.getBeginning(i);
+    while (auxNode != nullptr) {
+      Array[j] = auxNode->getData();
+      auxNode = auxNode->getNext();
+      j++;
     }
+    if (j == Size - 1)
+      break;
   }
-  quickSort(Array, 0, Size - 1);
+  // quickSort(Array, 0, Size - 1);
 }
 
 void OcurrencyArray::quickSort(HashEntryWC **arr, int inicio, int fin) {
