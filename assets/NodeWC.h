@@ -14,9 +14,6 @@ public:
   NodeWC(T data){
     this->data = new T(data);
   }
-  ~NodeWC(){
-    delete next;
-  }
   void setData(T data){
     *this->data = data;
   }

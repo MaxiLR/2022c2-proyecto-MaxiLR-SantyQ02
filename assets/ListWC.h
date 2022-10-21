@@ -279,16 +279,6 @@ template <class T> void ListWC<T>::replace(int pos, T data) {
 
   auxNode->setDato(data);
 }
-/**
- * Función que vacia la lista enlazada
- * @tparam T
- */
-template <class T> void ListWC<T>::empty() {
-  NodeWC<T> *auxNode = beginning;
-  beginning = nullptr;
-  delete auxNode;
-  Size = 0;
-}
 
 template <class T> string ListWC<T>::toUpper(string Str) {
   for (unsigned int i = 0; i < Str.length(); i++) {

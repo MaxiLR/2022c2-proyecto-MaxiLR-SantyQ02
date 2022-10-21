@@ -4,7 +4,7 @@
 
 #define TEXT_1 "testTexts/txt.txt"
 #define TEXT_2 "testTexts/Words.txt"
-#define TEXT_3 "testTexts/mucho_texto.txt"
+#define TEXT_3 "C:/Users/maxim/Downloads/mucho_texto2.txt"
 #define TEXT_4 "testTexts/spanish.txt"
 #define TEXT_5 "testTexts/modelo.txt"
 
@@ -35,16 +35,16 @@ string toUpper(string Str) {
 }
 
 int main() {
-
   WordCounter WC;
 
   clock_t begin = clock();
 
-  WC.ocurrencies(TEXT_1, 2);
+  WC.wordsHMBT(TEXT_4);
 
   clock_t end = clock();
 
   double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
   cout << endl << "Tiempo: " << elapsed_secs << "\n";
+
   return 0;
 }

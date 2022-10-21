@@ -95,16 +95,15 @@ string HashMapBT::toUpper(string Str) {
 }
 
 unsigned int HashMapBT::hashFunc(string Key) {
-  // if (toupper(Key[0]) < 65 || toupper(Key[0]) > 90)
-  //   return 26;
-  return toupper(Key[0]); // -65
+  if (toupper(Key[0]) < 65 || toupper(Key[0]) > 90)
+    return 26;
+  return toupper(Key[0]) - 65;
 }
 
 void HashMapBT::print() {
   for (unsigned int i = 0; i < Size; i++) {
     if (!Table[i]->isEmpty()) {
       Table[i]->inorder();
-      cout << endl << endl;
     }
   }
 }

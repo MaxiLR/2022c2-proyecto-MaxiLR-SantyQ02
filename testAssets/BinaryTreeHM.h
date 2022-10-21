@@ -74,12 +74,12 @@ template <class T> void BinaryTreeHM<T>::put(T dato, TreeNodeHE<T> *r) {
     return;
   }
 
-  if (dato.getKey().compare(r->getData()->getKey()) == 0) {
+  if (dato.getKey() == r->getData()->getKey()) {
     // Aumenta en 1 las ocurrencias
     r->getData()->setCounter(r->getData()->getCounter() + 1);
     return;
   }
-  if (dato.getKey().compare(r->getData()->getKey()) < 0) {
+  if (dato.getKey() < r->getData()->getKey()) {
     if (r->getLeft() == nullptr) {
       r->setLeft(newTreeNode);
       diffCounter++;

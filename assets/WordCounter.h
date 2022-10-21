@@ -25,7 +25,8 @@ public:
   void defaultUse(string Filename);
   void wordsDT(string Filename, unsigned int n = 0);
   void wordsHMBT(string Filename, unsigned int n = 0);
-  void ocurrencies(string Filename, unsigned int n = 0);
+  void ocurrenciesQ(string Filename, unsigned int n = 0);
+  void ocurrenciesA(string Filename, unsigned int n = 0);
 };
 
 WordCounter::WordCounter() {
@@ -49,7 +50,7 @@ void WordCounter::defaultUse(string Filename) {
   string word;
   while (!file.eof()) {
     file >> word;
-    for (int i = 0; i < word.length(); i++) {
+    for (unsigned int i = 0; i < word.length(); i++) {
       if (ispunct(word[i])) {
         word.erase(word.begin() + i);
         i = -1;
@@ -74,7 +75,7 @@ void WordCounter::wordsDT(string Filename, unsigned int n) {
   string word;
   while (!file.eof()) {
     file >> word;
-    for (int i = 0; i < word.length(); i++) {
+    for (unsigned int i = 0; i < word.length(); i++) {
       if (ispunct(word[i])) {
         word.erase(word.begin() + i);
         i = -1;
@@ -93,7 +94,7 @@ void WordCounter::wordsHMBT(string Filename, unsigned int n) {
   string word;
   while (!file.eof()) {
     file >> word;
-    for (int i = 0; i < word.length(); i++) {
+    for (unsigned int i = 0; i < word.length(); i++) {
       if (ispunct(word[i])) {
         word.erase(word.begin() + i);
         i = -1;
@@ -106,17 +107,15 @@ void WordCounter::wordsHMBT(string Filename, unsigned int n) {
   HMBT.print();
 }
 
-void WordCounter::ocurrencies(string Filename, unsigned int n) {
+void WordCounter::ocurrenciesA(string Filename, unsigned int n) {
   ifstream file(Filename);
-
-  OcurrencyQueue<HashEntryWC> OC;
 
   HashMapWC HM(499979);
   string word;
 
   while (!file.eof()) {
     file >> word;
-    for (int i = 0; i < word.length(); i++) {
+    for (unsigned int i = 0; i < word.length(); i++) {
       if (ispunct(word[i])) {
         word.erase(word.begin() + i);
         i = -1;
@@ -126,15 +125,38 @@ void WordCounter::ocurrencies(string Filename, unsigned int n) {
   }
   file.close();
 
-  // OcurrencyArray OA(HM.getHECount());
-  // OA.loadArray(HM);
+  OcurrencyArray OA(HM.getHECount());
+  OA.loadArray(HM);
 
   cout.sync_with_stdio(false);
 
-  // OA.printN(n);
-  OC.loadQueue(HM);
-  OC.printN(n);
-  
+  OA.printN(n);
+}
+
+void WordCounter::ocurrenciesQ(string Filename, unsigned int n) {
+  ifstream file(Filename);
+
+  OcurrencyQueue<HashEntryWC> OQ;
+  HashMapWC HM(499979);
+  string word;
+
+  while (!file.eof()) {
+    file >> word;
+    for (unsigned int i = 0; i < word.length(); i++) {
+      if (ispunct(word[i])) {
+        word.erase(word.begin() + i);
+        i = -1;
+      }
+    }
+    HM.put(word);
+  }
+  file.close();
+
+  cout.sync_with_stdio(false);
+
+  OQ.loadQueue(HM);
+  OQ.printN(n);
+
 }
 
 string WordCounter::toUpper(string Str) {

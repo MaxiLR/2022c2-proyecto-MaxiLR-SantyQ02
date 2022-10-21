@@ -98,12 +98,12 @@ template <class T> void OcurrencyQueue<T>::printN(unsigned int n) {
   if (n == 0 || n >= Size) {
     for (unsigned int i = 0; i < Size; i++) {
       T HashEntry = pull();
-      cout << HashEntry.getKey() << " " << HashEntry.getCounter() << "\n";
+      cout << HashEntry.getKey() << " | " << HashEntry.getCounter() << "\n";
     }
   } else {
     for (unsigned int i = 0; i < n; i++) {
       T HashEntry = pull();
-      cout << HashEntry.getKey() << " " << HashEntry.getCounter() << "\n";
+      cout << HashEntry.getKey() << " | " << HashEntry.getCounter() << "\n";
     }
   }
 }

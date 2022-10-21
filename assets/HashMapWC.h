@@ -15,7 +15,6 @@ private:
 
 public:
   explicit HashMapWC(unsigned int Size);
-  ~HashMapWC();
   NodeWC<HashEntryWC>* getBeginning(unsigned int i);
   unsigned int getEmptyCells();
   unsigned int getHECount();
@@ -33,14 +32,6 @@ HashMapWC::HashMapWC(unsigned int Size) {
   Table = new ListWC<HashEntryWC> *[Size];
   for (unsigned int i = 0; i < Size; i++) {
     Table[i] = new ListWC<HashEntryWC>;
-  }
-}
-
-HashMapWC::~HashMapWC() {
-  for (unsigned int i = 0; i < Size; i++) {
-    if (Table[i] != nullptr) {
-      delete Table[i];
-    }
   }
 }
 

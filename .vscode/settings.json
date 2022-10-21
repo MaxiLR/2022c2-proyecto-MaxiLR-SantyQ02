@@ -10,6 +10,8 @@
         "fstream": "cpp",
         "initializer_list": "cpp",
         "streambuf": "cpp",
-        "tuple": "cpp"
+        "tuple": "cpp",
+        "string": "cpp",
+        "typeinfo": "cpp"
     }
 }
