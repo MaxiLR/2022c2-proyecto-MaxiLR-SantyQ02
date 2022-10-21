@@ -85,6 +85,7 @@ void WordCounter::show(string Filename, string Word){
     HM.put(word);
   }
   file.close();
+  HM.remove("de");
   cout << toUpper(Word) << " | " << HM.getCounter(Word) << "\n";
 }
 

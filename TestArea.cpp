@@ -50,10 +50,6 @@ int main() {
   // cout << "Tiempo del COUT: " << elapsed_sec << " | Tiempo del PrintF: " <<
   // elpased_se;
 
-  char test1 = 300;
-  char test = 500;
-  // cin >> test;
+  HashMapWC HM(499979);
 
-  cout << test << "  " << static_cast<char>(test);
-  return 0;
 }

@@ -27,7 +27,7 @@ public:
   void autoinsert(T data);
   void insertFirst(T data);
   void insertLast(T data);
-  void remove(int pos);
+  void remove(string Key);
   T *getData(int pos);
   T *searchWord(string Key);
   void replace(int pos, T data);
@@ -185,9 +185,10 @@ template <class T> void ListWC<T>::insertLast(T data) {
  * @tparam T
  * @param pos posicion del nodo a eliminar
  */
-template <class T> void ListWC<T>::remove(int pos) {
+template <class T> void ListWC<T>::remove(string Key) {
   int posActual1 = 0, posActual2 = 0;
   NodeWC<T> *auxNode1 = beginning, *auxNode2;
+  Key = toUpper(Key);
 
   if (isEmpty())
     throw 405;
@@ -199,7 +200,7 @@ template <class T> void ListWC<T>::remove(int pos) {
   }
 
   // NodeWC anterior al que se desea eliminar
-  while (auxNode1 != nullptr && posActual1 < pos - 1) {
+  while (auxNode != nullptr && auxNode->getData()->getKey() != Key) {
     auxNode1 = auxNode1->getNext();
     posActual1++;
   }
@@ -240,13 +241,13 @@ template <class T> T *ListWC<T>::getData(int pos) {
 }
 
 template <class T> T *ListWC<T>::searchWord(string Key) {
-  NodeWC<T> *auxNode;
-  auxNode = beginning;
+  NodeWC<T> *auxNode = beginning;
+  Key = toUpper(Key);
 
   if (isEmpty())
     return nullptr;
 
-  while (auxNode != nullptr && auxNode->getData()->getKey() != toUpper(Key)) {
+  while (auxNode != nullptr && auxNode->getData()->getKey() != Key) {
     auxNode = auxNode->getNext();
   }
 

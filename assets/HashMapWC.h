@@ -15,7 +15,7 @@ private:
 
 public:
   explicit HashMapWC(unsigned int Size);
-  NodeWC<HashEntryWC>* getBeginning(unsigned int i);
+  NodeWC<HashEntryWC> *getBeginning(unsigned int i);
   unsigned int getEmptyCells();
   unsigned int getHECount();
   unsigned int getCounter(string Key);
@@ -24,6 +24,7 @@ public:
   void put(string Key);
   void remove(string Key);
   bool isEmpty();
+  void print();
 };
 
 HashMapWC::HashMapWC(unsigned int Size) {
@@ -35,7 +36,7 @@ HashMapWC::HashMapWC(unsigned int Size) {
   }
 }
 
-NodeWC<HashEntryWC> *HashMapWC::getBeginning(unsigned int i){
+NodeWC<HashEntryWC> *HashMapWC::getBeginning(unsigned int i) {
   return Table[i]->getBeginning();
 }
 
@@ -79,12 +80,7 @@ void HashMapWC::put(string Key) {
 
 void HashMapWC::remove(string Key) {
   unsigned int pos = hashFunc(Key) % Size;
-  HashEntryWC *toDelete = Table[pos]->searchWord(Key);
-
-  if (toDelete == nullptr)
-    return;
-
-  delete toDelete;
+  Table[pos]->remove(Key);
 }
 
 bool HashMapWC::isEmpty() {
@@ -96,7 +92,7 @@ bool HashMapWC::isEmpty() {
 }
 
 unsigned int HashMapWC::hashFunc(string Key) {
-  unsigned int hash;
+  unsigned int hash = 0;
   for (unsigned int i = 0; i < Key.length(); i++) {
     hash = 31 * hash + toupper(Key[i]);
   }
@@ -108,6 +104,17 @@ string HashMapWC::toUpper(string Str) {
     Str[i] = toupper(Str[i]);
   }
   return Str;
+}
+
+void HashMapWC::print() {
+  for (unsigned int i = 0; i < Size; i++) {
+    NodeWC<HashEntryWC> *auxNode = Table[i]->getBeginning();
+    while (auxNode != nullptr) {
+      cout << auxNode->getData()->getKey() << " | "
+           << auxNode->getData()->getCounter() << endl;
+      auxNode = auxNode->getNext();
+    }
+  }
 }
 
 #endif // U05_HASH_HASHMAP_HASHMAP_H_
