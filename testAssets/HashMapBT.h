@@ -77,7 +77,15 @@ void HashMapBT::put(string Key) {
   Table[pos]->put(newHE);
 }
 
-void HashMapBT::remove(string Key) {}
+void HashMapBT::remove(string Key) {
+  unsigned int pos = hashFunc(Key) % Size;
+  HashEntryWC *toDelete = Table[pos]->searchWord(Key);
+
+  if (toDelete == nullptr)
+    return;
+
+  delete toDelete;
+}
 
 bool HashMapBT::isEmpty() {
   for (unsigned int i = 0; i < Size; i++) {

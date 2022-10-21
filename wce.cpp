@@ -39,7 +39,7 @@ int main() {
 
   clock_t begin = clock();
 
-  WC.wordsHMBT(TEXT_4);
+  WC.show(TEXT_1, "de");
 
   clock_t end = clock();
 

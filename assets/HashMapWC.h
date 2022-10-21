@@ -46,7 +46,7 @@ unsigned int HashMapWC::getCounter(string Key) {
   HashEntryWC *TablePos = Table[pos]->searchWord(Key);
 
   if (TablePos == nullptr)
-    throw 404;
+    return 0;
 
   return TablePos->getCounter();
 }
@@ -77,7 +77,15 @@ void HashMapWC::put(string Key) {
   HECounter++;
 }
 
-void HashMapWC::remove(string Key) {}
+void HashMapWC::remove(string Key) {
+  unsigned int pos = hashFunc(Key) % Size;
+  HashEntryWC *toDelete = Table[pos]->searchWord(Key);
+
+  if (toDelete == nullptr)
+    return;
+
+  delete toDelete;
+}
 
 bool HashMapWC::isEmpty() {
   for (unsigned int i = 0; i < Size; i++) {

@@ -23,6 +23,7 @@ public:
   unsigned int getLineCount();
   unsigned int getDiffWordCount();
   void defaultUse(string Filename);
+  void show(string Filename, string Word);
   void wordsDT(string Filename, unsigned int n = 0);
   void wordsHMBT(string Filename, unsigned int n = 0);
   void ocurrenciesQ(string Filename, unsigned int n = 0);
@@ -67,6 +68,24 @@ void WordCounter::defaultUse(string Filename) {
   cout.sync_with_stdio(false);
   cout << "WORDS: " << WordCount << " | LETTERS: " << LetterCount
        << " | LINES: " << LineCount << " | DIFFWORDS: " << DiffWordCount;
+}
+
+void WordCounter::show(string Filename, string Word){
+  ifstream file(Filename);
+  HashMapWC HM(499979);
+  string word;
+  while (!file.eof()) {
+    file >> word;
+    for (unsigned int i = 0; i < word.length(); i++) {
+      if (ispunct(word[i])) {
+        word.erase(word.begin() + i);
+        i = -1;
+      }
+    }
+    HM.put(word);
+  }
+  file.close();
+  cout << toUpper(Word) << " | " << HM.getCounter(Word) << "\n";
 }
 
 void WordCounter::wordsDT(string Filename, unsigned int n) {
