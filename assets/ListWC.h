@@ -186,23 +186,21 @@ template <class T> void ListWC<T>::insertLast(T data) {
  * @param pos posicion del nodo a eliminar
  */
 template <class T> void ListWC<T>::remove(string Key) {
-  int posActual1 = 0, posActual2 = 0;
   NodeWC<T> *auxNode1 = beginning, *auxNode2;
   Key = toUpper(Key);
 
   if (isEmpty())
     throw 405;
 
-  if (pos == 0) {
+  if (beginning->getData()->getKey() == Key) {
     beginning = beginning->getNext();
     delete auxNode1;
     return;
   }
 
   // NodeWC anterior al que se desea eliminar
-  while (auxNode != nullptr && auxNode->getData()->getKey() != Key) {
+  while (auxNode1 != nullptr && auxNode1->getNext()->getData()->getKey() != Key) {
     auxNode1 = auxNode1->getNext();
-    posActual1++;
   }
 
   if (auxNode1 == nullptr)

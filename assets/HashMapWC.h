@@ -47,7 +47,7 @@ unsigned int HashMapWC::getCounter(string Key) {
   HashEntryWC *TablePos = Table[pos]->searchWord(Key);
 
   if (TablePos == nullptr)
-    return 0;
+    throw 404;
 
   return TablePos->getCounter();
 }

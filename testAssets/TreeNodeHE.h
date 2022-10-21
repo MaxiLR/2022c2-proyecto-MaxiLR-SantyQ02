@@ -8,25 +8,20 @@ using namespace std;
 template <class T> class TreeNodeHE {
 private:
   T* data;
-  unsigned int WordCount;
   TreeNodeHE *left, *right;
 
 public:
   TreeNodeHE() {
-    this->WordCount = 1;
     left = nullptr;
     right = nullptr;
   }
   TreeNodeHE(T data) {
     this->data = new T(data);
-    this->WordCount = 1;
     left = nullptr;
     right = nullptr;
   }
   T* getData() const { return data; }
   void setData(T d) { *this->data = d; }
-  unsigned int getWordCount() { return WordCount; }
-  void setWordCount(unsigned int WordCount) { this->WordCount = WordCount; }
   TreeNodeHE *getRight() const { return right; }
   void setRight(TreeNodeHE *r) { right = r; }
   TreeNodeHE *getLeft() const { return left; }

@@ -1,8 +1,8 @@
 #ifndef HASHMAPBT_H
 #define HASHMAPBT_H
 
-#include "BinaryTreeHM.h"
 #include "../assets/HashEntryWC.h"
+#include "BinaryTreeHM.h"
 #include <math.h>
 #include <string>
 
@@ -79,12 +79,7 @@ void HashMapBT::put(string Key) {
 
 void HashMapBT::remove(string Key) {
   unsigned int pos = hashFunc(Key) % Size;
-  HashEntryWC *toDelete = Table[pos]->searchWord(Key);
-
-  if (toDelete == nullptr)
-    return;
-
-  delete toDelete;
+  Table[pos]->remove(Key);
 }
 
 bool HashMapBT::isEmpty() {

@@ -9,6 +9,12 @@
 #include <stdio.h>
 #include <string.h>
 
+#define TEXT_1 "testTexts/txt.txt"
+#define TEXT_2 "testTexts/Words.txt"
+#define TEXT_3 "C:/Users/maxim/Downloads/mucho_texto2.txt"
+#define TEXT_4 "testTexts/spanish.txt"
+#define TEXT_5 "testTexts/modelo.txt"
+
 using namespace std;
 
 string toUpper(string Str) {
@@ -50,6 +56,12 @@ int main() {
   // cout << "Tiempo del COUT: " << elapsed_sec << " | Tiempo del PrintF: " <<
   // elpased_se;
 
-  HashMapWC HM(499979);
+  WordCounter WC;
 
+  try {
+    WC.wordsHMBT(TEXT_5);
+
+  } catch (int err) {
+    cout << err;
+  }
 }
