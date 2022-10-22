@@ -37,7 +37,10 @@ public:
  * @tparam K Clave por la cual va a ordenar el árbol
  * @tparam T Valor guardado por el árbol
  */
-template <class T> BinaryTreeHM<T>::BinaryTreeHM() { root = nullptr; }
+template <class T> BinaryTreeHM<T>::BinaryTreeHM() {
+  root = nullptr;
+  diffCounter = 0;
+}
 
 /**
  * Destructor del Arbol

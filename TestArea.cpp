@@ -62,7 +62,7 @@ int main() {
     clock_t begin = clock();
     std::ios::sync_with_stdio(false);
 
-    WC.wordsHMBT(TEXT_5, 2);
+    WC.wordsHMBT(TEXT_5, 4);
 
     clock_t end = clock();
     double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
