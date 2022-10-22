@@ -22,7 +22,7 @@ public:
   void put(string Key);
   void remove(string Key);
   bool isEmpty();
-  void print();
+  void print(unsigned int n);
 };
 
 HashMapBT::HashMapBT() {
@@ -103,10 +103,20 @@ unsigned int HashMapBT::hashFunc(string Key) {
   return toupper(Key[0]) - 65;
 }
 
-void HashMapBT::print() {
+void HashMapBT::print(unsigned int n) {
+  if(n == 0){
+    for (unsigned int i = 0; i < Size; i++) {
+      if (!Table[i]->isEmpty()) {
+        Table[i]->inorderN(n);
+      }
+    }
+    return;
+  }
+  int acum = 0;
   for (unsigned int i = 0; i < Size; i++) {
     if (!Table[i]->isEmpty()) {
-      Table[i]->inorder();
+      Table[i]->inorderN(n - acum);
+      acum += Table[i]->getDiffCounter();
     }
   }
 }

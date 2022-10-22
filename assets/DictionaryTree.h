@@ -56,6 +56,13 @@ unsigned int DictionaryTree::search(string Word) {
 }
 
 void DictionaryTree::inorder(unsigned int n) {
+  if(n == 0){
+    AG->inorderN(n);
+    HN->inorderN(n);
+    OU->inorderN(n);
+    VZ->inorderN(n);
+    return;
+  }
   AG->inorderN(n);
   HN->inorderN(n - AG->getDiffCounter());
   OU->inorderN(n - AG->getDiffCounter() - OU->getDiffCounter());

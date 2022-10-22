@@ -96,79 +96,54 @@ int main(int argc, char *argv[]) {
       break;
     }
 
-    if (argc >4){
-      if (/* condition */){
-        /* code */
-      }
-      
-    }
-
     if (argv[1] == "-mostrar"){
-      int cont = argc, size = argc-3;
+      int cont = argc-1, size = argc-3;
       string phrase;
-      for (size_t i = 3; i < cont-1; i++){
+      for (size_t i = 3; i < cont; i++){
         phrase = phrase + justAlpha(argv[i] + ' ');
       }
       WC.show(argv[cont], phrase, size);
     }
-
-    // //uso normal
-    // if (argc == 2) {
-    //     WC.defaultUse(argv[1]);
-    //     return 0;
-    // }
-
-    // //-palabras [n]
-    // if (strcmp(argv[1], "-palabras") == 0){
-    //   if (argc == 3){
-    //     WC.wordsDT(argv[2]);
-    //     return 0;
-    //   }
-    //   if (argc == 4){
-    //     int n = stoi(justAlpha(argv[2]));
-    //     WC.wordsDT(argv[3], n);
-    //     return 0;
-    //   }
-    //   if (argc == 5 && argv[2] == "-excluir"){
-    //     string w = justAlpha(argv[3]);
-    //     //WC.wordsDT(WC.exclude(argv[4], w));
-    //     return 0;
-    //   }
-    //   if (argc == 5 && argv[2] == "-excluirf"){
-    //     //WC.wordsHMBT(WC.excludef(argv[4], argv[3]));
-    //     return 0;
-    //   }
-    // }
-
-    // //-ocurrencias [n]
-    // if (argv[1] == "-ocurrencias"){
-    //   if (argc == 3){
-    //     WC.ocurrenciesA(argv[2]);
-    //   }
-    //   if (argc == 4){
-    //       int n = stoi(justAlpha(argv[2]));
-    //       WC.ocurrenciesA(argv[3], n);
-    //   }
-    //   if (argc == 5 &&  argv[2] == "-excluir"){
-    //       string w = justAlpha(argv[3]);
-    //       //WC.ocurrenciesA(WC.exclude(argv[5], w));
-    //   }
-    //   if (argc == 5 && argv[2] == "-excluirf"){
-    //       //WC.ocurrenciesA(WC.excludef(argv[5], argv[4]));
-    //   }
-    // }
-    
-
-    //-mostrar [n]
-    // if (argv[1] == "-mostrar"){
-    //   int cont = argc, size = argc-3;
-    //   string phrase;
-    //   for (size_t i = 3; i < cont-1; i++){
-    //     phrase = phrase + justAlpha(argv[i] + ' ');
-    //   }
-    //   WC.show(argv[cont], phrase, size);
-
-    // }
+    else if (argc >4){
+      if (argv[1] == "-palabras"){
+        if (argv[2] == "-excluir"){
+          int cont = argc-1, size = argc-3;
+          string phrase;
+          for (size_t i = 3; i < cont; i++){
+            phrase = phrase + justAlpha(argv[i] + ' ');
+          }
+          //WC.wordsDT(WC.exclude(argv[cont], phrase));
+        }
+        else if (argv[1] == "-palabras" && argv[3] == "-excluir"){
+          int cont = argc-1, size = argc-4, n = 0;
+          string phrase;
+          for (size_t i = 4; i < cont; i++){
+            phrase = phrase + justAlpha(argv[i] + ' ');
+          }
+          n = stoi(justAlpha(argv[2]));
+          //WC.wordsDT(WC.exclude(argv[cont], phrase), n);
+        }
+      }
+      else if (argv[1] == "-ocurrencias"){
+        if (argv[2] == "-excluir"){
+          int cont = argc-1, size = argc-3;
+          string phrase;
+          for (size_t i = 3; i < cont; i++){
+            phrase = phrase + justAlpha(argv[i] + ' ');
+          }
+          //WC.ocurrencies(WC.exclude(argv[cont], phrase));
+        }
+        else if (argv[3] == "-excluir"){
+          int cont = argc-1, size = argc-4, n = 0;
+          string phrase;
+          for (size_t i = 4; i < cont; i++){
+            phrase = phrase + justAlpha(argv[i] + ' ');
+          }
+          n = stoi(justAlpha(argv[2]));
+          //WC.ocurrencies(WC.exclude(argv[cont], phrase));
+        }
+      }
+    }
 
     clock_t end = clock();
     double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;

@@ -162,9 +162,9 @@ void WordCounter::wordsHMBT(string Filename, unsigned int n) {
     HMBT.put(word);
   }
   file.close();
-  HMBT.remove("de");
+  // HMBT.remove("de");
   cout.sync_with_stdio(false);
-  HMBT.print();
+  HMBT.print(n);
 }
 
 void WordCounter::ocurrenciesA(string Filename, unsigned int n) {

@@ -59,7 +59,15 @@ int main() {
   WordCounter WC;
 
   try {
-    WC.wordsHMBT(TEXT_5);
+    clock_t begin = clock();
+    std::ios::sync_with_stdio(false);
+
+    WC.wordsHMBT(TEXT_5, 2);
+
+    clock_t end = clock();
+    double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
+    cout << endl << "Tiempo: " << elapsed_secs << "\n";
+
 
   } catch (int err) {
     cout << err;

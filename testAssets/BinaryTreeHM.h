@@ -12,6 +12,7 @@ private:
   void put(T data, TreeNodeHE<T> *r);
   void preorder(TreeNodeHE<T> *r);
   void inorder(TreeNodeHE<T> *r);
+  void inorderN(TreeNodeHE<T> *r, unsigned int n, unsigned int &count);
   void postorder(TreeNodeHE<T> *r);
   string toUpper(string Str);
   int diffCounter;
@@ -25,7 +26,7 @@ public:
   void remove(string Word);
   unsigned int getDiffCounter();
   void preorder();
-  void inorder();
+  void inorderN(int n);
   void postorder();
   bool isEmpty();
   void print();
@@ -242,16 +243,37 @@ template <class T> void BinaryTreeHM<T>::preorder(TreeNodeHE<T> *r) {
   preorder(r->getRight());
 }
 
-/**
- * Recorre un árbol en orden
- */
-template <class T> void BinaryTreeHM<T>::inorder() { inorder(root); }
+template <class T> void BinaryTreeHM<T>::inorderN(int n) {
+  if (n == 0 || n >= diffCounter) {
+    inorder(root);
+    return;
+  } else if (n < 0)
+    return;
+  unsigned int i = 0;
+  inorderN(root, n, i);
+}
+
 template <class T> void BinaryTreeHM<T>::inorder(TreeNodeHE<T> *r) {
   if (r == nullptr)
     return;
   inorder(r->getLeft());
   cout << r->getData()->getKey() << " ";
   inorder(r->getRight());
+}
+
+template <class T>
+void BinaryTreeHM<T>::inorderN(TreeNodeHE<T> *r, unsigned int n,
+                               unsigned int &count) {
+  if (r == nullptr)
+    return;
+  if (count == n)
+    return;
+  inorderN(r->getLeft(), n, count);
+  if (n > count) {
+    cout << r->getData()->getKey() << " ";
+    count++;
+    inorderN(r->getRight(), n, count);
+  }
 }
 
 /**
