@@ -154,7 +154,7 @@ int main(int argc, char *argv[]) {
 
   clock_t end = clock();
   double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
-  cout << endl << "Tiempo: " << elapsed_secs << "\n";
+  cout << "Tiempo: " << elapsed_secs << "\n";
 
   return 0;
 }

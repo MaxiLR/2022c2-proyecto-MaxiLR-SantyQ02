@@ -81,7 +81,7 @@ void WordCounter::defaultUse(string Filename) {
   File.close();
 
   cout << "WORDS: " << WordCount << " | LETTERS: " << LetterCount
-       << " | LINES: " << LineCount << " | DIFFWORDS: " << DiffWordCount;
+       << " | LINES: " << LineCount << " | DIFFWORDS: " << DiffWordCount << "\n";
 }
 
 void WordCounter::show(string Filename, string *arrStr,
@@ -157,6 +157,7 @@ void WordCounter::wordsDT(string Filename, unsigned int n) {
   File.close();
 
   DT.inorder(n);
+  cout << "\n";
 }
 
 void WordCounter::wordsHMBT(string Filename, unsigned int n) {
@@ -180,9 +181,9 @@ void WordCounter::wordsHMBT(string Filename, unsigned int n) {
     HMBT.put(word);
   }
   File.close();
-  // HMBT.remove("de");
 
   HMBT.print(n);
+  cout << "\n";
 }
 
 void WordCounter::ocurrenciesA(string Filename, unsigned int n) {
@@ -270,6 +271,7 @@ void WordCounter::excludeWords(string Filename, string *arrStr,
   }
 
   HMBT.print(n);
+  cout << "\n";
 }
 
 void WordCounter::excludefWords(string Filename, string eFilename,
@@ -311,6 +313,7 @@ void WordCounter::excludefWords(string Filename, string eFilename,
   eFile.close();
 
   HMBT.print(n);
+  cout << "\n";
 }
 
 void WordCounter::excludeOcurrencies(string Filename, string *arrStr,
