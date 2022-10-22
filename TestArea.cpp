@@ -1,12 +1,6 @@
 #include "assets/WordCounter.h"
-#include <algorithm>
 #include <ctime>
-#include <fcntl.h>
-#include <io.h>
-#include <iomanip>
 #include <iostream>
-#include <math.h>
-#include <stdio.h>
 #include <string.h>
 
 #define TEXT_1 "testTexts/txt.txt"
@@ -17,59 +11,143 @@
 
 using namespace std;
 
-string toUpper(string Str) {
-  for (unsigned int i = 0; i < Str.length(); i++) {
-    Str[i] = toupper(Str[i]);
-  }
-  return Str;
+//-palabras [n]: Mostrará las n primeras palabras en orden alfabético. Si n no
+//es ingresado o vale 0, mostrará todas las palabras
+// [DictionaryTree]
+//-ocurrencias [n]: Mostrará las n palabras y la cantidad de ocurrencias de c/u
+//ordenadas de mayor a menor por ocurrencia. Si n no es ingresado o vale 0,
+//mostrará todas las palabras
+// [HashMapWC + OcurrenciesQueue]
+//-mostrar [palabra],[palabra] : Mostrará la o las palabras pasadas como
+//argumento ordenadas por ocurrencia.
+//[HashMapWC + OcurrenciesQueue]
+//-excluir [palabra],[palabra] : Modifica los comandos ocurrencias y palabras
+//haciendo que no muestren las palabras pasadas como argumentos.
+// [Delete according to structure]
+//-excluirf [archivo.txt] : Modifica los comandos ocurrencias y palabras
+//haciendo que no muestren las palabras que contiene el archivo.txt.
+// [Delete according to structure]
+
+string justAlpha(string str){
+    for (unsigned int i = 0; i < str.length(); i++) {
+        if (ispunct(str[i])) {
+            str.erase(str.begin() + i);
+            i = -1;
+        }
+    }
+    return str;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+    WordCounter WC;
 
-  // const char *teststring = "Test output string\n";
-  // clock_t start, end;
-  // double duration;
-
-  // cout << "Starting cout test." << endl;
-  // start = clock();
-
-  // std::ios_base::sync_with_stdio(false);
-
-  // for (unsigned int i = 0; i < 1000; i++)
-  //   cout << teststring;
-  // /* Display timing results, code trimmed for brevity */
-
-  // end = clock();
-  // double long elapsed_sec = static_cast<double>(end - start) /
-  // CLOCKS_PER_SEC;
-
-  // std::ios_base::sync_with_stdio(false);
-
-  // start = clock();
-  // for (unsigned int i = 0; i < 1000; i++) {
-  //   printf(teststring);
-  // }
-  // end = clock();
-  // double long elpased_se = static_cast<double>(end - start) / CLOCKS_PER_SEC;
-  // /* Display timing results, code trimmed for brevity */
-
-  // cout << "Tiempo del COUT: " << elapsed_sec << " | Tiempo del PrintF: " <<
-  // elpased_se;
-
-  WordCounter WC;
-
-  try {
     clock_t begin = clock();
     std::ios::sync_with_stdio(false);
 
-    WC.wordsHMBT(TEXT_5, 4);
+    switch (argc)
+    {
+    case 1:
+      cout << "Debe ingresar una archivo" << "\n";
+      break;
+
+    case 2:
+      WC.defaultUse(argv[1]);
+      break;
+
+    case 3:
+      if(argv[1] == "-palabras"){
+        WC.wordsDT(argv[2]);
+      }
+      else if(argv[1] == "-ocurrencias"){
+        WC.ocurrenciesA(argv[2]);
+      }
+      break;
+
+    case 4:
+      if(argv[1] == "-palabras"){
+        int n = stoi(justAlpha(argv[2]));
+        WC.wordsDT(argv[3], n);
+      }
+      else if(argv[1] == "-ocurrencias"){
+        int n = stoi(justAlpha(argv[2]));
+        WC.ocurrenciesA(argv[3], n);
+      }
+      break;
+
+    case 5:
+      if(argv[1] == "-palabras" && argv[2] == "-excluirf"){
+        WC.excludefWords(argv[4], 0, argv[3]);
+      }
+      else if(argv[1] == "-ocurrencias" && argv[2] == "-excluirf"){
+        WC.excludefOcurrencies(argv[4], 0, argv[3]);
+      }
+      break;
+
+    case 6:
+      if(argv[1] == "-palabras" && argv[3] == "-excluirf"){
+        //WC.wordsDT(WC.excludef(argv[4], argv[3]));
+      }
+      else if(argv[1] == "-ocurrencias" && argv[3] == "-excluirf"){
+        //WC.ocurrenciesA(WC.excludef(argv[5], argv[4]));
+      }
+      break;
+    
+    default:
+      break;
+    }
+
+    if (argv[1] == "-mostrar"){
+      int cont = argc-1, size = argc-3;
+      string phrase;
+      for (size_t i = 3; i < cont; i++){
+        phrase = phrase + justAlpha(argv[i] + ' ');
+      }
+      WC.show(argv[cont], phrase, size);
+    }
+    else if (argc >4){
+      if (argv[1] == "-palabras"){
+        if (argv[2] == "-excluir"){
+          int cont = argc-1, size = argc-3;
+          string phrase;
+          for (size_t i = 3; i < cont; i++){
+            phrase = phrase + justAlpha(argv[i] + ' ');
+          }
+          //WC.wordsDT(WC.exclude(argv[cont], phrase));
+        }
+        else if (argv[1] == "-palabras" && argv[3] == "-excluir"){
+          int cont = argc-1, size = argc-4, n = 0;
+          string phrase;
+          for (size_t i = 4; i < cont; i++){
+            phrase = phrase + justAlpha(argv[i] + ' ');
+          }
+          n = stoi(justAlpha(argv[2]));
+          //WC.wordsDT(WC.exclude(argv[cont], phrase), n);
+        }
+      }
+      else if (argv[1] == "-ocurrencias"){
+        if (argv[2] == "-excluir"){
+          int cont = argc-1, size = argc-3;
+          string phrase;
+          for (size_t i = 3; i < cont; i++){
+            phrase = phrase + justAlpha(argv[i] + ' ');
+          }
+          //WC.ocurrencies(WC.exclude(argv[cont], phrase));
+        }
+        else if (argv[3] == "-excluir"){
+          int cont = argc-1, size = argc-4, n = 0;
+          string phrase;
+          for (size_t i = 4; i < cont; i++){
+            phrase = phrase + justAlpha(argv[i] + ' ');
+          }
+          n = stoi(justAlpha(argv[2]));
+          //WC.ocurrencies(WC.exclude(argv[cont], phrase));
+        }
+      }
+    }
 
     clock_t end = clock();
     double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
     cout << endl << "Tiempo: " << elapsed_secs << "\n";
 
-
-  } catch (int err) {
-    cout << err;
-  }
+    return 0;
 }

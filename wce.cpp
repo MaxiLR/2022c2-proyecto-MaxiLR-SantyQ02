@@ -76,10 +76,10 @@ int main(int argc, char *argv[]) {
 
     case 5:
       if(argv[1] == "-palabras" && argv[2] == "-excluirf"){
-        //WC.wordsDT(WC.excludef(argv[4], argv[3]));
+        WC.excludefWords(argv[4], 0, argv[3]);
       }
       else if(argv[1] == "-ocurrencias" && argv[2] == "-excluirf"){
-        //WC.ocurrenciesA(WC.excludef(argv[4], argv[3]));
+        WC.excludefOcurrencies(argv[4], 0, argv[3]);
       }
       break;
 

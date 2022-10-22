@@ -80,7 +80,11 @@ void HashMapWC::put(string Key) {
 
 void HashMapWC::remove(string Key) {
   unsigned int pos = hashFunc(Key) % Size;
-  Table[pos]->remove(Key);
+  try{
+    Table[pos]->remove(Key);
+    HECounter--;
+  } catch (int err){
+  }
 }
 
 bool HashMapWC::isEmpty() {
