@@ -29,9 +29,11 @@ public:
   void wordsHMBT(string Filename, unsigned int n = 0);
   void ocurrenciesQ(string Filename, unsigned int n = 0);
   void ocurrenciesA(string Filename, unsigned int n = 0);
-  void excludeWords();
+  void excludeWords(string Filename, string *arrStr, unsigned int arrStrSize,
+                    unsigned int n);
   void excludefWords(string Filename, unsigned int n, string eFilename);
-  void excludeOcurrencies();
+  void excludeOcurrencies(string Filename, string *arrStr,
+                          unsigned int arrStrSize, unsigned int n);
   void excludefOcurrencies(string Filename, unsigned int n, string eFilename);
 };
 
@@ -54,6 +56,7 @@ void WordCounter::defaultUse(string Filename) {
   ifstream File(Filename);
   HashMapWC HM(499979);
   string word;
+  
   while (!File.eof()) {
     File >> word;
     for (unsigned int i = 0; i < word.length(); i++) {
@@ -70,18 +73,18 @@ void WordCounter::defaultUse(string Filename) {
     DiffWordCount = HM.getHECount();
   }
   File.close();
-  cout.sync_with_stdio(false);
+
   cout << "WORDS: " << WordCount << " | LETTERS: " << LetterCount
        << " | LINES: " << LineCount << " | DIFFWORDS: " << DiffWordCount;
 }
 
 void WordCounter::show(string Filename, string Words, int Size) {
   try {
+    ifstream File(Filename);
+    HashMapWC HM(499979);
     string word;
     int cont = 0, temp;
 
-    ifstream File(Filename);
-    HashMapWC HM(499979);
     while (!File.eof()) {
       File >> word;
       for (unsigned int i = 0; i < word.length(); i++) {
@@ -134,6 +137,7 @@ void WordCounter::wordsDT(string Filename, unsigned int n) {
   ifstream File(Filename);
   DictionaryTree DT;
   string word;
+
   while (!File.eof()) {
     File >> word;
     for (unsigned int i = 0; i < word.length(); i++) {
@@ -145,7 +149,7 @@ void WordCounter::wordsDT(string Filename, unsigned int n) {
     DT.put(word);
   }
   File.close();
-  cout.sync_with_stdio(false);
+
   DT.inorder(n);
 }
 
@@ -153,6 +157,7 @@ void WordCounter::wordsHMBT(string Filename, unsigned int n) {
   ifstream File(Filename);
   HashMapBT HMBT;
   string word;
+
   while (!File.eof()) {
     File >> word;
     for (unsigned int i = 0; i < word.length(); i++) {
@@ -165,13 +170,12 @@ void WordCounter::wordsHMBT(string Filename, unsigned int n) {
   }
   File.close();
   // HMBT.remove("de");
-  cout.sync_with_stdio(false);
+
   HMBT.print(n);
 }
 
 void WordCounter::ocurrenciesA(string Filename, unsigned int n) {
   ifstream File(Filename);
-
   HashMapWC HM(499979);
   string word;
 
@@ -190,14 +194,11 @@ void WordCounter::ocurrenciesA(string Filename, unsigned int n) {
   OcurrencyArray OA(HM.getHECount());
   OA.loadArray(HM);
 
-  cout.sync_with_stdio(false);
-
   OA.printN(n);
 }
 
 void WordCounter::ocurrenciesQ(string Filename, unsigned int n) {
   ifstream File(Filename);
-
   OcurrencyQueue<HashEntryWC> OQ;
   HashMapWC HM(499979);
   string word;
@@ -214,13 +215,33 @@ void WordCounter::ocurrenciesQ(string Filename, unsigned int n) {
   }
   File.close();
 
-  cout.sync_with_stdio(false);
-
   OQ.loadQueue(HM);
   OQ.printN(n);
 }
 
-void WordCounter::excludeWords() {}
+void WordCounter::excludeWords(string Filename, string *arrStr,
+                               unsigned int arrStrSize, unsigned int n) {
+  ifstream File(Filename);
+  HashMapBT HMBT;
+  string word;
+  while (!File.eof()) {
+    File >> word;
+    for (unsigned int i = 0; i < word.length(); i++) {
+      if (ispunct(word[i])) {
+        word.erase(word.begin() + i);
+        i = -1;
+      }
+    }
+    HMBT.put(word);
+  }
+  File.close();
+
+  for (int i = 0; i < arrStrSize; i++) {
+    HMBT.remove(arrStr[i]);
+  }
+
+  HMBT.print(n);
+}
 
 void WordCounter::excludefWords(string Filename, unsigned int n,
                                 string eFilename) {
@@ -255,7 +276,33 @@ void WordCounter::excludefWords(string Filename, unsigned int n,
   HMBT.print(n);
 }
 
-void WordCounter::excludeOcurrencies() {}
+void WordCounter::excludeOcurrencies(string Filename, string *arrStr,
+                                     unsigned int arrStrSize, unsigned int n) {
+  ifstream File(Filename);
+  HashMapWC HM(499979);
+  string word;
+
+  while (!File.eof()) {
+    File >> word;
+    for (unsigned int i = 0; i < word.length(); i++) {
+      if (ispunct(word[i])) {
+        word.erase(word.begin() + i);
+        i = -1;
+      }
+    }
+    HM.put(word);
+  }
+  File.close();
+
+  for (int i = 0; i < arrStrSize; i++) {
+    HM.remove(arrStr[i]);
+  }
+
+  OcurrencyArray OA(HM.getHECount());
+  OA.loadArray(HM);
+
+  OA.printN(n);
+}
 
 void WordCounter::excludefOcurrencies(string Filename, unsigned int n,
                                       string eFilename) {

@@ -55,40 +55,42 @@ int main(int argc, char *argv[]) {
       break;
 
     case 3:
-      if(argv[1] == "-palabras"){
+      if(strcmp(argv[1], "-palabras") == 0){
         WC.wordsDT(argv[2]);
       }
-      else if(argv[1] == "-ocurrencias"){
+      else if(strcmp(argv[1], "-ocurrencias") == 0){
         WC.ocurrenciesA(argv[2]);
       }
       break;
 
     case 4:
-      if(argv[1] == "-palabras"){
+      if(strcmp(argv[1], "-palabras") == 0){
         int n = stoi(justAlpha(argv[2]));
         WC.wordsDT(argv[3], n);
       }
-      else if(argv[1] == "-ocurrencias"){
+      else if(strcmp(argv[1], "-ocurrencias") == 0){
         int n = stoi(justAlpha(argv[2]));
         WC.ocurrenciesA(argv[3], n);
       }
       break;
 
     case 5:
-      if(argv[1] == "-palabras" && argv[2] == "-excluirf"){
+      if(strcmp(argv[1], "-palabras") == 0 && strcmp(argv[2], "-excluirf") == 0){
         WC.excludefWords(argv[4], 0, argv[3]);
       }
-      else if(argv[1] == "-ocurrencias" && argv[2] == "-excluirf"){
+      else if(strcmp(argv[1], "-ocurrencias") == 0 && strcmp(argv[2], "-excluirf") == 0){
         WC.excludefOcurrencies(argv[4], 0, argv[3]);
       }
       break;
 
     case 6:
-      if(argv[1] == "-palabras" && argv[3] == "-excluirf"){
-        //WC.wordsDT(WC.excludef(argv[4], argv[3]));
+      if(strcmp(argv[1], "-palabras") == 0 && strcmp(argv[3], "-excluirf") == 0){
+        int n = stoi(justAlpha(argv[2]));
+        WC.excludefWords(argv[5], n, argv[4]);
       }
-      else if(argv[1] == "-ocurrencias" && argv[3] == "-excluirf"){
-        //WC.ocurrenciesA(WC.excludef(argv[5], argv[4]));
+      else if(strcmp(argv[1], "-ocurrencias") == 0 && strcmp(argv[3], "-excluirf") == 0){
+        int n = stoi(justAlpha(argv[2]));
+        WC.excludefOcurrencies(argv[5], n, argv[4]);
       }
       break;
     
@@ -96,7 +98,7 @@ int main(int argc, char *argv[]) {
       break;
     }
 
-    if (argv[1] == "-mostrar"){
+    if (strcmp(argv[1], "-mostrar") == 0){
       int cont = argc-1, size = argc-3;
       string phrase;
       for (size_t i = 3; i < cont; i++){
@@ -105,42 +107,42 @@ int main(int argc, char *argv[]) {
       WC.show(argv[cont], phrase, size);
     }
     else if (argc >4){
-      if (argv[1] == "-palabras"){
-        if (argv[2] == "-excluir"){
-          int cont = argc-1, size = argc-3;
-          string phrase;
+      if (strcmp(argv[1], "-palabras") == 0){
+        if (strcmp(argv[2], "-excluir") == 0){
+          int cont = argc-1, size = argc-4;
+          string phrase[size];
           for (size_t i = 3; i < cont; i++){
-            phrase = phrase + justAlpha(argv[i] + ' ');
+            phrase[i] =  justAlpha(argv[i]);
           }
-          //WC.wordsDT(WC.exclude(argv[cont], phrase));
+          WC.excludeWords(argv[cont], phrase, size, 0);
         }
-        else if (argv[1] == "-palabras" && argv[3] == "-excluir"){
+        else if (strcmp(argv[3], "-excluir") == 0){
           int cont = argc-1, size = argc-4, n = 0;
-          string phrase;
+          string phrase[size];
           for (size_t i = 4; i < cont; i++){
-            phrase = phrase + justAlpha(argv[i] + ' ');
+            phrase[i] =  justAlpha(argv[i]);
           }
           n = stoi(justAlpha(argv[2]));
-          //WC.wordsDT(WC.exclude(argv[cont], phrase), n);
+          WC.excludeWords(argv[cont], phrase, size, n);
         }
       }
-      else if (argv[1] == "-ocurrencias"){
-        if (argv[2] == "-excluir"){
+      else if (strcmp(argv[1], "-ocurrencias") == 0){
+        if (strcmp(argv[2], "-excluir") == 0){
           int cont = argc-1, size = argc-3;
-          string phrase;
+          string phrase[size];
           for (size_t i = 3; i < cont; i++){
-            phrase = phrase + justAlpha(argv[i] + ' ');
+            phrase[i] =  justAlpha(argv[i]);
           }
-          //WC.ocurrencies(WC.exclude(argv[cont], phrase));
+          WC.excludeOcurrencies(argv[cont], phrase, size, 0);
         }
-        else if (argv[3] == "-excluir"){
+        else if (strcmp(argv[3], "-excluir") == 0){
           int cont = argc-1, size = argc-4, n = 0;
-          string phrase;
+          string phrase[size];
           for (size_t i = 4; i < cont; i++){
-            phrase = phrase + justAlpha(argv[i] + ' ');
+            phrase[i] =  justAlpha(argv[i]);
           }
           n = stoi(justAlpha(argv[2]));
-          //WC.ocurrencies(WC.exclude(argv[cont], phrase));
+          WC.excludeOcurrencies(argv[cont], phrase, size, n);
         }
       }
     }
