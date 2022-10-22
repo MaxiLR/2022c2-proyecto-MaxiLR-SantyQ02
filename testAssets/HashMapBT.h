@@ -26,7 +26,7 @@ public:
 };
 
 HashMapBT::HashMapBT() {
-  this->Size = 26;
+  this->Size = 27;
   Table = new BinaryTreeHM<HashEntryWC> *[Size];
   for (unsigned int i = 0; i < Size; i++) {
     Table[i] = new BinaryTreeHM<HashEntryWC>;

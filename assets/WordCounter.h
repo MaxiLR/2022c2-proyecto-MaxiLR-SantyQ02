@@ -24,17 +24,18 @@ public:
   unsigned int getLineCount();
   unsigned int getDiffWordCount();
   void defaultUse(string Filename);
-  void show(string Filename, string Word, int Size);
+  void show(string Filename, string *arrStr, unsigned int arrStrSize);
   void wordsDT(string Filename, unsigned int n = 0);
   void wordsHMBT(string Filename, unsigned int n = 0);
   void ocurrenciesQ(string Filename, unsigned int n = 0);
   void ocurrenciesA(string Filename, unsigned int n = 0);
   void excludeWords(string Filename, string *arrStr, unsigned int arrStrSize,
-                    unsigned int n);
-  void excludefWords(string Filename, unsigned int n, string eFilename);
+                    unsigned int n = 0);
+  void excludefWords(string Filename, string eFilename, unsigned int n = 0);
   void excludeOcurrencies(string Filename, string *arrStr,
-                          unsigned int arrStrSize, unsigned int n);
-  void excludefOcurrencies(string Filename, unsigned int n, string eFilename);
+                          unsigned int arrStrSize, unsigned int n = 0);
+  void excludefOcurrencies(string Filename, string eFilename,
+                           unsigned int n = 0);
 };
 
 WordCounter::WordCounter() {
@@ -54,9 +55,14 @@ unsigned int WordCounter::getDiffWordCount() { return DiffWordCount; }
 
 void WordCounter::defaultUse(string Filename) {
   ifstream File(Filename);
+  if (File.fail()) {
+    cout << "Error al abrir el archivo!";
+    exit(EXIT_FAILURE);
+  }
+
   HashMapWC HM(499979);
   string word;
-  
+
   while (!File.eof()) {
     File >> word;
     for (unsigned int i = 0; i < word.length(); i++) {
@@ -78,12 +84,18 @@ void WordCounter::defaultUse(string Filename) {
        << " | LINES: " << LineCount << " | DIFFWORDS: " << DiffWordCount;
 }
 
-void WordCounter::show(string Filename, string Words, int Size) {
+void WordCounter::show(string Filename, string *arrStr,
+                       unsigned int arrStrSize) {
   try {
     ifstream File(Filename);
+    if (File.fail()) {
+      cout << "Error al abrir el archivo!";
+      exit(EXIT_FAILURE);
+    }
+
     HashMapWC HM(499979);
     string word;
-    int cont = 0, temp;
+    int cont = 0, temp = 0, ocAr[arrStrSize];
 
     while (!File.eof()) {
       File >> word;
@@ -97,37 +109,26 @@ void WordCounter::show(string Filename, string Words, int Size) {
     }
     File.close();
 
-    string wordArr[Size];
-    int ocArr[Size];
-    istringstream FileW(Words);
-    while (!File.eof()) {
-      FileW >> word;
-      for (unsigned int i = 0; i < word.length(); i++) {
-        if (ispunct(word[i])) {
-          word.erase(word.begin() + i);
-          i = -1;
-        }
-      }
-      wordArr[cont] = word;
-      ocArr[cont] = HM.getCounter(word);
-      cont++;
+    for (int i = 0; i < arrStrSize; i++) {
+      ocAr[i] = HM.getCounter(arrStr[i]);
     }
+
     // Ordenamiento:
-    for (int i = 0; i < Size - 1; i++) {
-      for (int j = 0; j < Size - i - 1; j++)
-        if (ocArr[j] > ocArr[j + 1]) {
+    for (int i = 0; i < arrStrSize; i++) {
+      for (int j = 0; j < arrStrSize - i - 1; j++)
+        if (ocAr[j + 1] > ocAr[j]) {
 
-          int intAux = ocArr[j];
-          ocArr[j] = ocArr[j + 1];
-          ocArr[j + 1] = intAux;
+          int intAux = ocAr[j];
+          ocAr[j] = ocAr[j + 1];
+          ocAr[j + 1] = intAux;
 
-          string strAux = wordArr[j];
-          wordArr[j] = wordArr[j + 1];
-          wordArr[j + 1] = strAux;
+          string strAux = arrStr[j];
+          arrStr[j] = arrStr[j + 1];
+          arrStr[j + 1] = strAux;
         }
     }
-    for (int i = 0; i < Size - 1; i++) {
-      cout << wordArr[i] << " | " << ocArr[i] << "\n";
+    for (int i = 0; i < arrStrSize; i++) {
+      cout << toUpper(arrStr[i]) << " | " << ocAr[i] << "\n";
     }
   } catch (int err) {
   }
@@ -135,6 +136,11 @@ void WordCounter::show(string Filename, string Words, int Size) {
 
 void WordCounter::wordsDT(string Filename, unsigned int n) {
   ifstream File(Filename);
+  if (File.fail()) {
+    cout << "Error al abrir el archivo!";
+    exit(EXIT_FAILURE);
+  }
+
   DictionaryTree DT;
   string word;
 
@@ -155,6 +161,11 @@ void WordCounter::wordsDT(string Filename, unsigned int n) {
 
 void WordCounter::wordsHMBT(string Filename, unsigned int n) {
   ifstream File(Filename);
+  if (File.fail()) {
+    cout << "Error al abrir el archivo!";
+    exit(EXIT_FAILURE);
+  }
+
   HashMapBT HMBT;
   string word;
 
@@ -176,6 +187,11 @@ void WordCounter::wordsHMBT(string Filename, unsigned int n) {
 
 void WordCounter::ocurrenciesA(string Filename, unsigned int n) {
   ifstream File(Filename);
+  if (File.fail()) {
+    cout << "Error al abrir el archivo!";
+    exit(EXIT_FAILURE);
+  }
+
   HashMapWC HM(499979);
   string word;
 
@@ -199,6 +215,11 @@ void WordCounter::ocurrenciesA(string Filename, unsigned int n) {
 
 void WordCounter::ocurrenciesQ(string Filename, unsigned int n) {
   ifstream File(Filename);
+  if (File.fail()) {
+    cout << "Error al abrir el archivo!";
+    exit(EXIT_FAILURE);
+  }
+
   OcurrencyQueue<HashEntryWC> OQ;
   HashMapWC HM(499979);
   string word;
@@ -222,6 +243,11 @@ void WordCounter::ocurrenciesQ(string Filename, unsigned int n) {
 void WordCounter::excludeWords(string Filename, string *arrStr,
                                unsigned int arrStrSize, unsigned int n) {
   ifstream File(Filename);
+  if (File.fail()) {
+    cout << "Error al abrir el archivo!";
+    exit(EXIT_FAILURE);
+  }
+
   HashMapBT HMBT;
   string word;
   while (!File.eof()) {
@@ -237,15 +263,23 @@ void WordCounter::excludeWords(string Filename, string *arrStr,
   File.close();
 
   for (int i = 0; i < arrStrSize; i++) {
-    HMBT.remove(arrStr[i]);
+    try {
+      HMBT.remove(arrStr[i]);
+    } catch (int err) {
+    }
   }
 
   HMBT.print(n);
 }
 
-void WordCounter::excludefWords(string Filename, unsigned int n,
-                                string eFilename) {
+void WordCounter::excludefWords(string Filename, string eFilename,
+                                unsigned int n) {
   ifstream File(Filename), eFile(eFilename);
+  if (File.fail() || eFile.fail()) {
+    cout << "Error al abrir el archivo!";
+    exit(EXIT_FAILURE);
+  }
+
   HashMapBT HMBT;
   string word;
 
@@ -269,7 +303,10 @@ void WordCounter::excludefWords(string Filename, unsigned int n,
         i = -1;
       }
     }
-    HMBT.remove(word);
+    try {
+      HMBT.remove(word);
+    } catch (int err) {
+    }
   }
   eFile.close();
 
@@ -279,6 +316,11 @@ void WordCounter::excludefWords(string Filename, unsigned int n,
 void WordCounter::excludeOcurrencies(string Filename, string *arrStr,
                                      unsigned int arrStrSize, unsigned int n) {
   ifstream File(Filename);
+  if (File.fail()) {
+    cout << "Error al abrir el archivo!";
+    exit(EXIT_FAILURE);
+  }
+
   HashMapWC HM(499979);
   string word;
 
@@ -295,7 +337,10 @@ void WordCounter::excludeOcurrencies(string Filename, string *arrStr,
   File.close();
 
   for (int i = 0; i < arrStrSize; i++) {
-    HM.remove(arrStr[i]);
+    try {
+      HM.remove(arrStr[i]);
+    } catch (int err) {
+    }
   }
 
   OcurrencyArray OA(HM.getHECount());
@@ -304,9 +349,14 @@ void WordCounter::excludeOcurrencies(string Filename, string *arrStr,
   OA.printN(n);
 }
 
-void WordCounter::excludefOcurrencies(string Filename, unsigned int n,
-                                      string eFilename) {
+void WordCounter::excludefOcurrencies(string Filename, string eFilename,
+                                      unsigned int n) {
   ifstream File(Filename), eFile(eFilename);
+  if (File.fail() || eFile.fail()) {
+    cout << "Error al abrir el archivo!";
+    exit(EXIT_FAILURE);
+  }
+
   HashMapWC HM(499979);
   string word;
 
@@ -330,7 +380,10 @@ void WordCounter::excludefOcurrencies(string Filename, unsigned int n,
         i = -1;
       }
     }
-    HM.remove(word);
+    try {
+      HM.remove(word);
+    } catch (int err) {
+    }
   }
   eFile.close();
 

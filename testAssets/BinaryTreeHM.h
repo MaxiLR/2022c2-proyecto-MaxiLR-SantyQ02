@@ -15,6 +15,8 @@ private:
   void inorderN(TreeNodeHE<T> *r, unsigned int n, unsigned int &count);
   void postorder(TreeNodeHE<T> *r);
   string toUpper(string Str);
+  TreeNodeHE<T> *remove(TreeNodeHE<T> *r, string Word);
+  TreeNodeHE<T> *minValueNode(TreeNodeHE<T> *node);
   int diffCounter;
 
 public:
@@ -23,6 +25,7 @@ public:
   void put(T data);
   T *searchWord(string Word);
   TreeNodeHE<T> *searchNode(string Word);
+  //void remove(string Word);
   void remove(string Word);
   unsigned int getDiffCounter();
   void preorder();
@@ -118,14 +121,14 @@ TreeNodeHE<T> *BinaryTreeHM<T>::searchNode(string Word, TreeNodeHE<T> *r) {
     if (r->getRight() == nullptr)
       throw 409;
     if (Word == r->getRight()->getData()->getKey()) {
-      return r;
+      return r->getRight();
     }
     return searchNode(Word, r->getRight());
   } else {
     if (r->getLeft() == nullptr)
       throw 407;
     if (Word == r->getLeft()->getData()->getKey()) {
-      return r;
+      return r->getLeft();
     }
     return searchNode(Word, r->getLeft());
   }
@@ -165,70 +168,115 @@ template <class T> void BinaryTreeHM<T>::putTree(TreeNodeHE<T> *r) {
  * Elimina un data del árbol
  * @param clave Clave para identificar el nodo a borrar
  */
+// template <class T> void BinaryTreeHM<T>::remove(string Word) {
+//   TreeNodeHE<T> *toDelete, *auxNode = searchNode(toUpper(Word));
+
+//   if (Word == root->getData()->getKey())
+//     toDelete = auxNode;
+//   else if (Word < auxNode->getData()->getKey())
+//     toDelete = auxNode->getLeft();
+//   else
+//     toDelete = auxNode->getRight();
+
+//   if (toDelete->getLeft() == nullptr && toDelete->getRight() == nullptr) {
+//     if (Word == root->getData()->getKey()) {
+//       root = nullptr;
+//       delete toDelete;
+//       return;
+//     }
+//     if (Word < auxNode->getData()->getKey())
+//       auxNode->setLeft(nullptr);
+//     else
+//       auxNode->setRight(nullptr);
+//     delete toDelete;
+//     return;
+//   }
+//   if (toDelete->getLeft() != nullptr && toDelete->getRight() == nullptr) {
+//     if (Word == root->getData()->getKey()) {
+//       root = toDelete->getLeft();
+//       delete toDelete;
+//       return;
+//     }
+//     if (Word < auxNode->getData()->getKey())
+//       auxNode->setLeft(toDelete->getLeft());
+//     else
+//       auxNode->setRight(toDelete->getLeft());
+//     delete toDelete;
+//     return;
+//   }
+//   if (toDelete->getLeft() == nullptr && toDelete->getRight() != nullptr) {
+//     if (Word == root->getData()->getKey()) {
+//       root = toDelete->getRight();
+//       delete toDelete;
+//       return;
+//     }
+//     if (Word < auxNode->getData()->getKey())
+//       auxNode->setLeft(toDelete->getRight());
+//     else
+//       auxNode->setRight(toDelete->getRight());
+//     delete toDelete;
+//     return;
+//   }
+//   if (toDelete->getLeft() != nullptr && toDelete->getRight() != nullptr) {
+//     if (Word == root->getData()->getKey()) {
+//       root = toDelete->getLeft();
+//       putTree(toDelete->getRight());
+//       delete toDelete;
+//       return;
+//     }
+//     if (Word < auxNode->getData()->getKey())
+//       auxNode->setLeft(toDelete->getLeft());
+//     else
+//       auxNode->setRight(toDelete->getLeft());
+//     putTree(toDelete->getRight());
+//     delete toDelete;
+//     return;
+//   }
+// }
+
 template <class T> void BinaryTreeHM<T>::remove(string Word) {
-  TreeNodeHE<T> *toDelete, *auxNodo = searchNode(toUpper(Word));
+    root = remove(root, Word);
+}
 
-  if (Word == root->getData()->getKey())
-    toDelete = auxNodo;
-  else if (Word < auxNodo->getData()->getKey())
-    toDelete = auxNodo->getLeft();
-  else
-    toDelete = auxNodo->getRight();
+template <class T> TreeNodeHE<T> *BinaryTreeHM<T>::remove(TreeNodeHE<T> *r, string Word) {
+  TreeNodeHE<T> *auxNode = searchNode(toUpper(Word));
 
-  if (toDelete->getLeft() == nullptr && toDelete->getRight() == nullptr) {
-    if (Word == root->getData()->getKey()) {
-      root = nullptr;
-      delete toDelete;
-      return;
+    if (r == nullptr){
+        return r;
     }
-    if (Word < auxNodo->getData()->getKey())
-      auxNodo->setLeft(nullptr);
-    else
-      auxNodo->setRight(nullptr);
-    delete toDelete;
-    return;
-  }
-  if (toDelete->getLeft() != nullptr && toDelete->getRight() == nullptr) {
-    if (Word == root->getData()->getKey()) {
-      root = toDelete->getLeft();
-      delete toDelete;
-      return;
+
+    if (auxNode->getData()->getKey() < r->getData()->getKey()){
+        r->setLeft(remove(r->getLeft(), auxNode->getData()->getKey()));
     }
-    if (Word < auxNodo->getData()->getKey())
-      auxNodo->setLeft(toDelete->getLeft());
-    else
-      auxNodo->setRight(toDelete->getLeft());
-    delete toDelete;
-    return;
-  }
-  if (toDelete->getLeft() == nullptr && toDelete->getRight() != nullptr) {
-    if (Word == root->getData()->getKey()) {
-      root = toDelete->getRight();
-      delete toDelete;
-      return;
+    else if (auxNode->getData()->getKey() > r->getData()->getKey()){
+        r->setRight(remove(r->getRight(), auxNode->getData()->getKey()));
     }
-    if (Word < auxNodo->getData()->getKey())
-      auxNodo->setLeft(toDelete->getRight());
-    else
-      auxNodo->setRight(toDelete->getRight());
-    delete toDelete;
-    return;
-  }
-  if (toDelete->getLeft() != nullptr && toDelete->getRight() != nullptr) {
-    if (Word == root->getData()->getKey()) {
-      root = toDelete->getLeft();
-      putTree(toDelete->getRight());
-      delete toDelete;
-      return;
+    else {
+        if (r->getLeft() == nullptr && r->getRight() == nullptr){
+            return nullptr;
+        }
+        else if (r->getLeft() == nullptr){
+            TreeNodeHE<T> *toDelete = r->getRight();
+            return toDelete;
+        }
+        else if (r->getRight() == nullptr){
+            TreeNodeHE<T> *toDelete = r->getLeft();
+            return toDelete;
+        }
+
+        TreeNodeHE<T> *toDelete = minValueNode(r->getRight());
+        r->getData()->getKey() = toDelete->getData()->getKey();
+        r->setRight(remove(r->getRight(), toDelete->getData()->getKey()));
     }
-    if (Word < auxNodo->getData()->getKey())
-      auxNodo->setLeft(toDelete->getLeft());
-    else
-      auxNodo->setRight(toDelete->getLeft());
-    putTree(toDelete->getRight());
-    delete toDelete;
-    return;
-  }
+    return r;
+}
+
+template <class T> TreeNodeHE<T> *BinaryTreeHM<T>::minValueNode(TreeNodeHE<T> *node){
+    TreeNodeHE<T> *currentNode = node;
+    while (currentNode && currentNode->getLeft() != nullptr)
+        currentNode = currentNode->getLeft();
+
+    return currentNode;
 }
 
 /**
